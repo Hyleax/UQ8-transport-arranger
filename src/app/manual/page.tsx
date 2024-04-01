@@ -60,7 +60,7 @@ export default function Manual() {
             {/*  add and select members here **RIGHT SIDE***/}
             <div className="flex flex-col justify-center items-center w-[400px] gap-5">
                 {/* add new member button */}
-                <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 rounded-xl">New Member</button>
+                <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 w-full rounded-xl drop-shadow-lg">Add Member</button>
                 
                 {/* Select Drivers from here */}
                 <div className="flex flex-wrap gap-3 border-2 shadow-xl 
@@ -81,7 +81,7 @@ export default function Manual() {
 
                 {/* Select Riders from here */}
                 <div className="flex flex-wrap gap-3 border-2 shadow-xl 
-                    rounded-md w-full p-3 overflow-y-auto h-[20em]">
+                    rounded-md w-full p-3 overflow-y-auto h-[30em]">
                     {
                         UQ8_transport_array.filter((x) =>x.got_car === 'no').map((m) => (
                             <DraggableNameEntry 
