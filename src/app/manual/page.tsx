@@ -26,7 +26,7 @@ export default function Manual() {
 
     const [UQ8_transport_array, setUQ8_transport_array] = useState<member[]>([...membersWithCar, ...sortedArrWithoutDrivers])
                                                                                     
-    const [transportArray, setTransportArray] = useState([1])
+    const [transportArray, setTransportArray] = useState([1,1,1,1])
     const [addedMembers, setAddedMembers] = useState<string[]>([]) 
 
     // drag function
