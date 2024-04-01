@@ -70,9 +70,9 @@ export default function Manual() {
                 
                 <div className="flex justify-between gap-2 w-full">
                   {/* add temp member button */}
-                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg">Add New Member</button>
-                  <button className="bg-blue-200 hover:bg-blue-300 px-5 py-3 rounded-xl drop-shadow-lg">Automatically Arrange</button>
-                  <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3  rounded-xl drop-shadow-lg ">Export</button>
+                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">Add New Friend</button>
+                  <button className="bg-blue-200 hover:bg-blue-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm">Automatically Arrange Transport</button>
+                  <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3  rounded-xl drop-shadow-lg  text-sm">Export Format</button>
                 </div>
                 
                 {/* Select Drivers from here */}
@@ -222,7 +222,7 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
         <div 
         draggable 
         className= {`${addedMembers.includes(memberName) ? 'pointer-events-none bg-gray-300' : 'bg-purple-200 hover:bg-purple-300'}
-            p-3 cursor-pointer w-[172px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1`}
+            p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1`}
         onDragStart={(e) => {
             if (handleOnDrag !== undefined) { handleOnDrag(e as unknown as React.DragEvent, memberName) }
         }}
@@ -230,7 +230,7 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
         >
             { hasCar && <span className="absolute top-0 right-0 pr-1">🚗</span> }
 
-            { memberName } <span className="text-xs italic">({ suburb })</span>
+            <p className="text-xs font-bold text-left w-full">{ memberName } <span className="text-xs italic font-extralight">({ suburb })</span></p>
         </div>
     )
 }
