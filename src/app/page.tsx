@@ -26,13 +26,19 @@ export default function Manual() {
 
     const [UQ8_transport_array, setUQ8_transport_array] = useState<member[]>([...membersWithCar, ...sortedArrWithoutDrivers])
                                                                                     
-    const [transportArray, setTransportArray] = useState([1,1,1,1])
+    const [transportArray, setTransportArray] = useState([1,2,3,4])
     const [addedMembers, setAddedMembers] = useState<string[]>([]) 
+
 
     // drag function
     const handleOnDrag = (e: React.DragEvent, content: string) => {
         e.dataTransfer.setData('memberName', content)
     }
+
+   // remove transport list entry
+   const removeTransportListEntry = (id: number) => {
+    setTransportArray(prev => [...prev].filter((x, index) => index !== transportArray.length - 1))
+  }
 
   return (
     <main className="flex flex-col items-center">
@@ -44,11 +50,13 @@ export default function Manual() {
             {/* drop members here **LEFT SIDE***/}
             <div className="flex gap-4 items-center  max-w-[70%] overflow-x-auto ">
                 {
-                    transportArray?.map((ele, index) => {
+                    transportArray?.map((number, index) => {
                         return(
                             <TransportListEntry 
                                 key={index} 
-                                setAddedMembers={setAddedMembers}/>
+                                number = { index === transportArray.length - 1 ? 9999 : number  }
+                                setAddedMembers={setAddedMembers}
+                                removeTransportListEntry={removeTransportListEntry}/>
                         )
                     })
                 }
@@ -62,8 +70,8 @@ export default function Manual() {
                 
                 <div className="flex justify-between  gap-2 w-full">
                   {/* add new member button */}
-                  <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 w-full rounded-xl drop-shadow-lg">Automatically Arrange</button>
-                  <button className="bg-blue-300 hover:bg-blue-400 px-5 py-3  rounded-xl drop-shadow-lg ">Export</button>
+                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 w-full rounded-xl drop-shadow-lg">Automatically Arrange</button>
+                  <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3  rounded-xl drop-shadow-lg ">Export</button>
                 </div>
                 
                 {/* Select Drivers from here */}
@@ -115,8 +123,10 @@ export default function Manual() {
  * @param param0 setAddedMembers
  * @returns a component representing a singular vehicle list that can potentially contain one or more people
  */
-const TransportListEntry = ({setAddedMembers}: {
+const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}: {
         setAddedMembers: React.Dispatch<React.SetStateAction<string[]>>
+        number: number
+        removeTransportListEntry: (id: number) => void
     }) => {
 
     const [membersInVehicle, setMembersInVehicle] = useState<string []>([])
@@ -136,10 +146,19 @@ const TransportListEntry = ({setAddedMembers}: {
         if (handleOnDrop !== undefined) { handleOnDrop(e) }
         }} 
         onDragOver={(e) => e.preventDefault()}
-        className="min-w-[200px] h-[750px] bg-slate-200 
+        className="w-[200px] h-[750px] bg-slate-200 
           rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
 
             { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
+
+            {
+              number === 9999 &&
+
+              <button 
+                onClick={() => removeTransportListEntry(number)}
+                className="absolute bottom-3 bg-red-700 hover:bg-red-800 p-2 w-[80%] rounded-lg text-white shadow-lg">remove
+              </button>
+            }
 
         {
             membersInVehicle.map((name, index) => {
@@ -172,7 +191,7 @@ const AddTransportListEntry = ({setTransportArray}: {
 
     return (
       <div 
-        onClick={() => setTransportArray(prev => [...prev, 1])}
+        onClick={() => setTransportArray(prev => [...prev, prev[prev.length - 1] + 1])}
         className="cursor-pointer min-w-[200px] h-[750px] bg-red-100 hover:bg-red-200 
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
