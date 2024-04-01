@@ -133,7 +133,8 @@
         "Ming": {"suburb": "St. Lucia", "got_car": "no"},
         "Mabel": {"suburb": "Nathan", "got_car": "no"},
         "Conrad": {"suburb": "Logan", "got_car": "no"},
-        "Cheri": {"suburb": "Wollongabba", "got_car": "no"}
+        "Cheri": {"suburb": "Wollongabba", "got_car": "no"},
+        "Ainia": {"suburb": "Oxley", "got_car": "yes"}
 
     }
 }
