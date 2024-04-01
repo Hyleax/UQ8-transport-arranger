@@ -1,0 +1,139 @@
+{
+    "suburb_distances": {
+        "St. Lucia": {
+            "Toowong": 3,
+            "Wollongaba": 9,
+            "Annerly": 11,
+            "Tingalpa": 19,
+            "Sunnybank": 20,
+            "Indooropilly": 3,
+            "Nathan": 13,
+            "Unidus": 16,
+            "UQ": 1
+        },
+        "Toowong": {
+            "St. Lucia": 3,
+            "Wollongaba": 8,
+            "Annerly": 11,
+            "Tingalpa": 18,
+            "Sunnybank": 19,
+            "Indooropilly": 3,
+            "Nathan": 16,
+            "Unidus": 23,
+            "UQ": 3
+        },
+        "Wollongaba": {
+            "St. Lucia": 9,
+            "Toowong": 8,
+            "Annerly": 3,
+            "Tingalpa": 11,
+            "Sunnybank": 12,
+            "Indooropilly": 9,
+            "Nathan": 9,
+            "Unidus": 15,
+            "UQ": 8
+        },
+        "Annerly": {
+            "St. Lucia": 11,
+            "Toowong": 11,
+            "Wollongaba": 3,
+            "Tingalpa": 14,
+            "Sunnybank": 12,
+            "Indooropilly": 9,
+            "Nathan": 6,
+            "Unidus": 12,
+            "UQ": 12
+        },
+        "Tingalpa": {
+            "St. Lucia": 19,
+            "Toowong": 18,
+            "Wollongaba": 11,
+            "Annerly": 14,
+            "Sunnybank": 19,
+            "Indooropilly": 25,
+            "Nathan": 16,
+            "Unidus": 28,
+            "UQ": 19
+        },
+        "Sunnybank": {
+            "St. Lucia": 20,
+            "Toowong": 19,
+            "Wollongaba": 12,
+            "Annerly": 12,
+            "Tingalpa": 19,
+            "Indooropilly": 15,
+            "Nathan": 6,
+            "Unidus": 9,
+            "UQ": 20
+        },
+        "Indooropilly": {
+            "St. Lucia": 3,
+            "Toowong": 3,
+            "Wollongaba": 9,
+            "Annerly": 9,
+            "Tingalpa": 25,
+            "Sunnybank": 15,
+            "Nathan": 10,
+            "Unidus": 14,
+            "UQ": 4
+        },
+        "Nathan": {
+            "St. Lucia": 13,
+            "Toowong": 16,
+            "Wollongaba": 9,
+            "Annerly": 6,
+            "Tingalpa": 16,
+            "Sunnybank": 6,
+            "Indooropilly": 10,
+            "Unidus": 10,
+            "UQ": 17
+        },
+        "Unidus": {
+            "St. Lucia": 16,
+            "Toowong": 23,
+            "Wollongaba": 15,
+            "Annerly": 12,
+            "Tingalpa": 28,
+            "Sunnybank": 9,
+            "Indooropilly": 14,
+            "Nathan": 10,
+            "UQ": 17
+        },
+        "UQ": {
+            "St. Lucia": 1,
+            "Toowong": 3,
+            "Wollongaba": 8,
+            "Annerly": 12,
+            "Tingalpa": 19,
+            "Sunnybank": 20,
+            "Indooropilly": 4,
+            "Nathan": 17,
+            "Unidus": 17
+        }
+    }
+    ,
+
+    "UQ8_transport_status": {
+        "Joanna": {"suburb": "St. Lucia", "got_car": "yes"},
+        "Alicia": {"suburb": "Tingalpa", "got_car": "yes"},
+        "Jolynn": {"suburb": "Toowong", "got_car": "yes"},
+        "Tang": {"suburb": "St. Lucia", "got_car": "yes"},
+        "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes"},
+        "Norman": {"suburb": "St. Lucia", "got_car": "no"},
+        "Adrinna": {"suburb": "Indooropilly", "got_car": "no"},
+        "Alexis": {"suburb": "Annerly", "got_car": "no"},
+        "Amanda": {"suburb": "St. Lucia", "got_car": "no"},
+        "Amelyn": {"suburb": "Toowong", "got_car": "no"},
+        "Amos": {"suburb": "Wollongabba", "got_car": "no"},
+        "Bryan": {"suburb": "Wollongabba", "got_car": "no"},
+        "Helen": {"suburb": "St. Lucia", "got_car": "no"},
+        "Kenny": {"suburb": "Annerly", "got_car": "no"},
+        "Kevin": {"suburb": "Annerly", "got_car": "no"},
+        "Samantha": {"suburb": "Toowong", "got_car": "no"},
+        "Ming": {"suburb": "St. Lucia", "got_car": "no"},
+        "Mabel": {"suburb": "Nathan", "got_car": "no"},
+        "Conrad": {"suburb": "Logan", "got_car": "no"},
+        "Cheri": {"suburb": "Wollongabba", "got_car": "no"}
+
+    }
+}
