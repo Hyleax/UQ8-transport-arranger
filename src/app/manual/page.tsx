@@ -37,7 +37,7 @@ export default function Manual() {
   return (
     <main className="flex flex-col items-center">
       <div className="container min-h-screen flex flex-col items-center">
-        {/* <h1 className="text-4xl font-semibold p-2 mt-3">UQ8 Transport Arranger</h1> */}
+        <h1 className="text-2xl font-semibold p-2 mt-3 font-sans">UQ8 Transport Arranger</h1>
 
         {/* Main Contet */}
         <div className="flex-1 flex w-full justify-between">
@@ -58,12 +58,12 @@ export default function Manual() {
             </div>
 
             {/*  add and select members here **RIGHT SIDE***/}
-            <div className="flex flex-col justify-center items-center w-[400px] gap-5">
+            <div className="flex flex-col justify-center items-center w-[400px] gap-2">
                 {/* add new member button */}
-                <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 w-full rounded-xl drop-shadow-lg">Add Member</button>
+                {/* <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 w-full rounded-xl drop-shadow-lg">Add Member</button> */}
                 
                 {/* Select Drivers from here */}
-                <div className="flex flex-wrap gap-3 border-2 shadow-xl 
+                <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 
                     rounded-md w-full p-3 overflow-y-auto ">
                     {
                         UQ8_transport_array.filter((x) =>x.got_car === 'yes').map((m) => (
@@ -132,7 +132,7 @@ const TransportListEntry = ({setAddedMembers}: {
         if (handleOnDrop !== undefined) { handleOnDrop(e) }
         }} 
         onDragOver={(e) => e.preventDefault()}
-        className="min-w-[200px] h-[600px] bg-slate-200 
+        className="min-w-[200px] h-[690px] bg-slate-200 
           rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
 
             { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
@@ -169,7 +169,7 @@ const AddTransportListEntry = ({setTransportArray}: {
     return (
       <div 
         onClick={() => setTransportArray(prev => [...prev, 1])}
-        className="cursor-pointer min-w-[200px] h-[600px] bg-red-100 hover:bg-red-200 
+        className="cursor-pointer min-w-[200px] h-[690px] bg-red-100 hover:bg-red-200 
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
                 size={60} 
@@ -238,6 +238,7 @@ const NotDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembers
         >
             <span onClick={handleClick} className="absolute top-0 right-0 pr-2 pt-1 hover:text-slate-400 cursor-pointer"><RxCross1 size={18}/></span>   
             
-            { memberName } <span className="text-xl">{`${index === 0 ? "🚗": ""}`}</span></div>
+            <p className="pl-2 text-left">{ memberName } <span className="text-xl">{`${index === 0 ? "🚗": ""}`}</span></p>
+        </div>
     )
 }
