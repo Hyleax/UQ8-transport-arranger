@@ -68,9 +68,10 @@ export default function Manual() {
             {/*  add and select members here **RIGHT SIDE***/}
             <div className="flex flex-col justify-center items-center w-[400px] gap-2">
                 
-                <div className="flex justify-between  gap-2 w-full">
-                  {/* add new member button */}
-                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 w-full rounded-xl drop-shadow-lg">Automatically Arrange</button>
+                <div className="flex justify-between gap-2 w-full">
+                  {/* add temp member button */}
+                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg">Add New Member</button>
+                  <button className="bg-blue-200 hover:bg-blue-300 px-5 py-3 rounded-xl drop-shadow-lg">Automatically Arrange</button>
                   <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3  rounded-xl drop-shadow-lg ">Export</button>
                 </div>
                 
@@ -146,7 +147,7 @@ const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}:
         if (handleOnDrop !== undefined) { handleOnDrop(e) }
         }} 
         onDragOver={(e) => e.preventDefault()}
-        className="w-[200px] h-[750px] bg-slate-200 
+        className="w-[200px] h-[770px] bg-slate-200 
           rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
 
             { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
@@ -156,7 +157,7 @@ const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}:
 
               <button 
                 onClick={() => removeTransportListEntry(number)}
-                className="absolute bottom-3 bg-red-700 hover:bg-red-800 p-2 w-[80%] rounded-lg text-white shadow-lg">remove
+                className="absolute bottom-3 bg-red-700 hover:bg-red-800 p-2 w-[80%] rounded-lg text-white shadow-lg text-xs">remove
               </button>
             }
 
@@ -192,7 +193,7 @@ const AddTransportListEntry = ({setTransportArray}: {
     return (
       <div 
         onClick={() => setTransportArray(prev => [...prev, prev[prev.length - 1] + 1])}
-        className="cursor-pointer min-w-[200px] h-[750px] bg-red-100 hover:bg-red-200 
+        className="cursor-pointer min-w-[200px] h-[770px] bg-red-100 hover:bg-red-200 
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
                 size={60} 
