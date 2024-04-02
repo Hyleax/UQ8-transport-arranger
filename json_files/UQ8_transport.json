@@ -9,6 +9,7 @@
             "Indooropilly": 3,
             "Nathan": 13,
             "Unidus": 16,
+            "Oxley": 9,
             "UQ": 1
         },
         "Toowong": {
@@ -20,6 +21,7 @@
             "Indooropilly": 3,
             "Nathan": 16,
             "Unidus": 23,
+            "Oxley": 14,
             "UQ": 3
         },
         "Wollongaba": {
@@ -31,6 +33,7 @@
             "Indooropilly": 9,
             "Nathan": 9,
             "Unidus": 15,
+            "Oxley": 13,
             "UQ": 8
         },
         "Annerly": {
@@ -42,6 +45,7 @@
             "Indooropilly": 9,
             "Nathan": 6,
             "Unidus": 12,
+            "Oxley": 10,
             "UQ": 12
         },
         "Tingalpa": {
@@ -53,6 +57,7 @@
             "Indooropilly": 25,
             "Nathan": 16,
             "Unidus": 28,
+            "Oxley": 25,
             "UQ": 19
         },
         "Sunnybank": {
@@ -64,6 +69,7 @@
             "Indooropilly": 15,
             "Nathan": 6,
             "Unidus": 9,
+            "Oxley": 11,
             "UQ": 20
         },
         "Indooropilly": {
@@ -75,6 +81,7 @@
             "Sunnybank": 15,
             "Nathan": 10,
             "Unidus": 14,
+            "Oxley": 7,
             "UQ": 4
         },
         "Nathan": {
@@ -86,6 +93,7 @@
             "Sunnybank": 6,
             "Indooropilly": 10,
             "Unidus": 10,
+            "Oxley": 10,
             "UQ": 17
         },
         "Unidus": {
@@ -97,6 +105,7 @@
             "Sunnybank": 9,
             "Indooropilly": 14,
             "Nathan": 10,
+            "Oxley": 8,
             "UQ": 17
         },
         "UQ": {
@@ -108,33 +117,57 @@
             "Sunnybank": 20,
             "Indooropilly": 4,
             "Nathan": 17,
+            "Oxley": 12,
             "Unidus": 17
+        }, 
+        "Oxley": {
+            "St. Lucia": 9,
+            "Toowong": 14,
+            "Wollongaba": 13,
+            "Annerly": 10,
+            "Tingalpa": 25,
+            "Sunnybank": 11,
+            "Indooropilly": 7,
+            "Nathan": 10,
+            "UQ": 12,
+            "Unidus": 8
         }
     }
     ,
 
     "UQ8_transport_status": {
-        "Joanna": {"suburb": "St. Lucia", "got_car": "yes"},
-        "Alicia": {"suburb": "Tingalpa", "got_car": "yes"},
-        "Jolynn": {"suburb": "Toowong", "got_car": "yes"},
-        "Tang": {"suburb": "St. Lucia", "got_car": "yes"},
-        "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes"},
-        "Norman": {"suburb": "St. Lucia", "got_car": "no"},
-        "Adrinna": {"suburb": "Indooropilly", "got_car": "no"},
-        "Alexis": {"suburb": "Annerly", "got_car": "no"},
-        "Amanda": {"suburb": "St. Lucia", "got_car": "no"},
-        "Amelyn": {"suburb": "Toowong", "got_car": "no"},
-        "Amos": {"suburb": "Wollongabba", "got_car": "no"},
-        "Bryan": {"suburb": "Wollongabba", "got_car": "no"},
-        "Helen": {"suburb": "St. Lucia", "got_car": "no"},
-        "Kenny": {"suburb": "Annerly", "got_car": "no"},
-        "Kevin": {"suburb": "Annerly", "got_car": "no"},
-        "Samantha": {"suburb": "Toowong", "got_car": "no"},
-        "Ming": {"suburb": "St. Lucia", "got_car": "no"},
-        "Mabel": {"suburb": "Nathan", "got_car": "no"},
-        "Conrad": {"suburb": "Logan", "got_car": "no"},
-        "Cheri": {"suburb": "Wollongabba", "got_car": "no"},
-        "Ainia": {"suburb": "Oxley", "got_car": "yes"}
-
+        "Joanna": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+        "Alicia": {"suburb": "Tingalpa", "got_car": "yes", "present": true},
+        "Jolynn": {"suburb": "Toowong", "got_car": "yes", "present": true},
+        "Tang": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+        "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
+        "Norman": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+        "Adrinna": {"suburb": "Indooropilly", "got_car": "no", "present": true},
+        "Alexis": {"suburb": "Annerley", "got_car": "no", "present": true},
+        "Amanda": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+        "Amelyn": {"suburb": "Toowong", "got_car": "no", "present": true},
+        "Amos": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+        "Bryan": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+        "Helen": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+        "Kenny": {"suburb": "Annerley", "got_car": "no", "present": true},
+        "Kevin": {"suburb": "Annerley", "got_car": "no", "present": true},
+        "Samantha": {"suburb": "Toowong", "got_car": "no", "present": true},
+        "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+        "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
+        "Conrad": {"suburb": "Logan", "got_car": "yes", "present": true},
+        "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+        "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
+        "Deneze": {"suburb": "Oxley", "got_car": "no", "present": true}
     }
+    
+    ,
+        "Rules": {
+            "rule_1": "Ming and Tang live in the same house",
+            "rule_2": "Kenny and Kevin live in the same house",
+            "rule_3": "Jolynn and Amelyn live in the same house",
+            "rule_4": "The driver should prioritize picking up passengers from the same suburb first",
+            "rule_5": "Bryan and Amos live in the same house",
+            "rule_6": "If it is possible, Alicia should only fetch passengers back from Unidus but not to Unidus",
+            "rule_7": "Adrinna will not require transport to and from Unidus, unless specified"
+        }
 }
