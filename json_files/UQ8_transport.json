@@ -155,6 +155,7 @@
         "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
         "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
         "Conrad": {"suburb": "Logan", "got_car": "yes", "present": true},
+        "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
         "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
         "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
         "Deneze": {"suburb": "Oxley", "got_car": "no", "present": true}
