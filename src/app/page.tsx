@@ -26,7 +26,7 @@ export default function Manual() {
 
     const [UQ8_transport_array, setUQ8_transport_array] = useState<member[]>([...membersWithCar, ...sortedArrWithoutDrivers])
                                                                                     
-    const [transportArray, setTransportArray] = useState([1,2,3,4])
+    const [transportArray, setTransportArray] = useState([1,2,3,4,5])
     const [addedMembers, setAddedMembers] = useState<string[]>([]) 
 
 
@@ -94,7 +94,7 @@ export default function Manual() {
 
                 {/* Select Riders from here */}
                 <div className="flex flex-wrap gap-3 border-2 shadow-xl 
-                    rounded-md w-full p-3 overflow-y-auto h-[30em]">
+                    rounded-md w-full p-3 overflow-y-auto h-[27em]">
                     {
                         UQ8_transport_array.filter((x) =>x.got_car === 'no').map((m) => (
                             <DraggableNameEntry 
@@ -147,7 +147,7 @@ const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}:
         if (handleOnDrop !== undefined) { handleOnDrop(e) }
         }} 
         onDragOver={(e) => e.preventDefault()}
-        className="w-[200px] h-[770px] bg-slate-200 
+        className="min-w-[140px] h-[770px] bg-slate-200 
           rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
 
             { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
@@ -193,7 +193,7 @@ const AddTransportListEntry = ({setTransportArray}: {
     return (
       <div 
         onClick={() => setTransportArray(prev => [...prev, prev[prev.length - 1] + 1])}
-        className="cursor-pointer min-w-[200px] h-[770px] bg-red-100 hover:bg-red-200 
+        className="cursor-pointer min-w-[140px] h-[770px] bg-red-100 hover:bg-red-200 
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
                 size={60} 
@@ -260,9 +260,9 @@ const NotDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembers
         className={`${index === 0 ? "bg-amber-100": "bg-blue-100"} p-3 w-full text-center drop-shadow-lg rounded-xl relative`}
 
         >
-            <span onClick={handleClick} className="absolute top-0 right-0 pr-2 pt-1 hover:text-slate-400 cursor-pointer"><RxCross1 size={18}/></span>   
+            <span onClick={handleClick} className="absolute top-0 right-0 pr-2 pt-1 hover:text-slate-400 cursor-pointer"><RxCross1 size={10}/></span>   
             
-            <p className="pl-2 text-left">{ memberName } <span className="text-xl">{`${index === 0 ? "🚗": ""}`}</span></p>
+            <p className="pl-2 text-left text-sm">{ memberName } <span className="text-xs">{`${index === 0 ? "🚗": ""}`}</span></p>
         </div>
     )
 }
