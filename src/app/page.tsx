@@ -7,28 +7,26 @@ import { FaPlusCircle } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import uq8_transport_data from '../../json_files/UQ8_transport.json'
 
+// components
+import NewFriendModal, { member } from "./components/Modal";
 
 /**
  * 
  * @returns a functional component that represents the entire manual page
  */
+
+
 export default function Manual() {
-
-    type member = {
-        suburb: string;
-        got_car: string;
-        name: string; 
-    }
-
     const all_members = Object.entries(uq8_transport_data.UQ8_transport_status).map(([name, info]) => ({ name, ...info })) // convert data from JS object to array 
     const membersWithCar = all_members.filter(member => member.got_car === 'yes') // get only members with cars
     const sortedArrWithoutDrivers = all_members.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb)) // get only members without cars, sort them by suburb
 
     const [UQ8_transport_array, setUQ8_transport_array] = useState<member[]>([...membersWithCar, ...sortedArrWithoutDrivers])
-                                                                                    
+    console.log(UQ8_transport_array)     
+    
     const [transportArray, setTransportArray] = useState([1,2,3,4,5])
     const [addedMembers, setAddedMembers] = useState<string[]>([]) 
-
+    const [openModal, setOpenModal] = useState(false) // state to open and close modal
 
     // drag function
     const handleOnDrag = (e: React.DragEvent, content: string) => {
@@ -70,7 +68,14 @@ export default function Manual() {
                 
                 <div className="flex justify-between gap-2 w-full">
                   {/* add temp member button */}
-                  <button className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">Add New Friend</button>
+                  <button onClick={() => setOpenModal(prev => !prev)} className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">Add New Friend</button>
+
+                    <NewFriendModal 
+                        openModal={openModal} 
+                        setOpenModal={setOpenModal}
+                        setUQ8_transport_array={setUQ8_transport_array}
+                    />
+
                   <button className="bg-blue-200 hover:bg-blue-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm">Automatically Arrange Transport</button>
                   <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3  rounded-xl drop-shadow-lg  text-sm">Export Format</button>
                 </div>
@@ -119,6 +124,13 @@ export default function Manual() {
 
 
 
+
+
+
+
+
+
+
 /**
  * 
  * @param param0 setAddedMembers
@@ -147,7 +159,7 @@ const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}:
         if (handleOnDrop !== undefined) { handleOnDrop(e) }
         }} 
         onDragOver={(e) => e.preventDefault()}
-        className="min-w-[140px] h-[770px] bg-slate-200 
+        className="min-w-[165px] h-[770px] bg-slate-200 
           rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
 
             { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
@@ -193,7 +205,7 @@ const AddTransportListEntry = ({setTransportArray}: {
     return (
       <div 
         onClick={() => setTransportArray(prev => [...prev, prev[prev.length - 1] + 1])}
-        className="cursor-pointer min-w-[140px] h-[770px] bg-red-100 hover:bg-red-200 
+        className="cursor-pointer min-w-[165px] h-[770px] bg-red-100 hover:bg-red-200 
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
                 size={60} 
