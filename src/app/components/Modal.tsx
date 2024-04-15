@@ -55,7 +55,7 @@ const NewFriendModal = ({openModal, setOpenModal, setUQ8_transport_array}: {
           
         </Modal.Body>
         <Modal.Footer className="flex">
-          <TextInput placeholder="admin string" className="flex-1" type="password"/>
+          <TextInput placeholder="admin string (required if adding permanent members)" className="flex-1" type="password"/>
           
           <div className="flex gap-1">
             <button className="bg-blue-200 px-3 py-2 rounded-lg" onClick={handleAdd}>Add</button>
