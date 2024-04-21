@@ -158,6 +158,7 @@
         "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
         "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
         "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
+        "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
         "Deneze": {"suburb": "Oxley", "got_car": "no", "present": true}
     }
     
