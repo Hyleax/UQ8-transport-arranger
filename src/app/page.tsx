@@ -60,6 +60,12 @@ export default function ManualInterface() {
 
     return (
         <main className="flex flex-col items-center">
+            
+            {/* version update information */}
+            <div className="bg-green-300 w-full flex justify-center p-1">
+                <p> v2 out now 🤩 new features include: <span className="font-extralight">Changing Between Lifegroups (UQ8, UQ6)</span></p>
+            </div>
+
             <div className="container h-screen flex flex-col items-center">
                 <h1 className="text-2xl p-2 mt-2">CCM Transport Arranger</h1>
 
@@ -122,7 +128,7 @@ export default function ManualInterface() {
                         </div>
 
                         {/* Select Drivers from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto h-[16em]">
+                        <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto max-h-[16em]">
                             {allMembers.filter(member => member.got_car === 'yes').map(member => (
                                 <DraggableNameEntry 
                                     key={member.name} 
@@ -136,7 +142,7 @@ export default function ManualInterface() {
                         </div>
 
                         {/* Select Riders from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto h-[27em]">
+                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto max-h-[27em]">
                             {allMembers.filter(member => member.got_car === 'no').map(member => (
                                 <DraggableNameEntry 
                                     key={member.name} 
