@@ -136,35 +136,34 @@
     ,
 
     "UQ8_transport_status": {
-        "Joanna": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
-        "Alicia": {"suburb": "Tingalpa", "got_car": "yes", "present": true},
-        "Jolynn": {"suburb": "Toowong", "got_car": "yes", "present": true},
-        "Tang": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
-        "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
-        "Norman": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-        "Adrinna": {"suburb": "Indooropilly", "got_car": "no", "present": true},
-        "Alexis": {"suburb": "Annerley", "got_car": "no", "present": true},
-        "Amanda": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-        "Amelyn": {"suburb": "Toowong", "got_car": "no", "present": true},
-        "Amos": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-        "Bryan": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-        "Helen": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-        "Kenny": {"suburb": "Annerley", "got_car": "no", "present": true},
-        "Kevin": {"suburb": "Annerley", "got_car": "no", "present": true},
-        "Samantha": {"suburb": "Toowong", "got_car": "no", "present": true},
-        "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-        "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
-        "Conrad": {"suburb": "Logan", "got_car": "yes", "present": true},
-        "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
-        "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-        "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
-        "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
-        "Abigail": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-        "Deneze": {"suburb": "Oxley", "got_car": "no", "present": true}
-    }
-    
-    ,
-        "Rules": {
+        "members": {
+            "Joanna": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Alicia": {"suburb": "Tingalpa", "got_car": "yes", "present": true},
+            "Jolynn": {"suburb": "Toowong", "got_car": "yes", "present": true},
+            "Tang": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
+            "Norman": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Adrinna": {"suburb": "Indooropilly", "got_car": "no", "present": true},
+            "Alexis": {"suburb": "Annerley", "got_car": "no", "present": true},
+            "Amanda": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Amelyn": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Amos": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Bryan": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Helen": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Kenny": {"suburb": "Annerley", "got_car": "no", "present": true},
+            "Kevin": {"suburb": "Annerley", "got_car": "no", "present": true},
+            "Samantha": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
+            "Conrad": {"suburb": "Logan", "got_car": "yes", "present": true},
+            "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
+            "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
+            "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
+            "Abigail": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Deneze": {"suburb": "Oxley", "got_car": "no", "present": true}
+        },
+        "rules": {
             "rule_1": "Ming and Tang live in the same house",
             "rule_2": "Kenny and Kevin live in the same house",
             "rule_3": "Jolynn and Amelyn live in the same house",
@@ -173,4 +172,31 @@
             "rule_6": "If it is possible, Alicia should only fetch passengers back from Unidus but not to Unidus",
             "rule_7": "Adrinna will not require transport to and from Unidus, unless specified"
         }
+    },
+
+
+    "UQ6_transport_status": {
+        "members": {
+            "Alfred": {"suburb": "Milton", "got_car": "yes", "present": true},
+            "Amber": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Ambrose": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Ben": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Brandon": {"suburb": "Toowong", "got_car": "yes", "present": true},
+            "Caleb": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Charis": {"suburb": "Sunnybank", "got_car": "no", "present": true},
+            "Chloe": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Crystal": {"suburb": "Indooropilly", "got_car": "no", "present": true},
+            "David": {"suburb": "Rochedale South", "got_car": "no", "present": true},
+            "Eleasa": {"suburb": "Indooropilly", "got_car": "no", "present": true},
+            "Justin": {"suburb": "Forest Lake", "got_car": "no", "present": true},
+            "Lisa": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Long": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Mark": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
+            "Michelle": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Shogo": {"suburb": "Taringa", "got_car": "no", "present": true},
+            "Sophia": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Wei Yan": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Wan Tong": {"suburb": "Toowong", "got_car": "no", "present": true}
+        }
+    }
 }
