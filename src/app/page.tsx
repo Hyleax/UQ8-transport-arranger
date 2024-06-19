@@ -63,7 +63,7 @@ export default function ManualInterface() {
             
             {/* version update information */}
             <div className="bg-green-300 w-full flex justify-center p-1">
-                <p> v2 out now 🤩 new features include: <span className="font-extralight">Changing Between Lifegroups (UQ8, UQ6)</span></p>
+                <p> v2 out now 🤩 new features include: <span className="font-extralight">adding of UQ6 members, changing Between Lifegroups </span> </p>
             </div>
 
             <div className="container h-screen flex flex-col items-center">
@@ -88,6 +88,7 @@ export default function ManualInterface() {
                             onChange={() => handleCheckboxChange('UQ6')} 
                         />
                     </label>
+                    <p className="font-light text-blue-500">Select lifegroups to view members</p>
                 </div>
 
                 {/* Main Content */}
@@ -122,7 +123,7 @@ export default function ManualInterface() {
                             <button className="bg-blue-200  px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
                                 Automatically Arrange Transport
                             </button>
-                            <button className="bg-emerald-300 hover:bg-emerald-400 px-5 py-3 rounded-xl drop-shadow-lg text-sm">
+                            <button className="bg-emerald-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
                                 Export Format
                             </button>
                         </div>
@@ -157,7 +158,7 @@ export default function ManualInterface() {
                     </div>
                 </div>
 
-                <h1 className="text-sm p-2 mt-3 font-sans font-extralight">Created by Norman Yap 2024</h1>
+                <h1 className="text-sm p-2 mt-3 font-sans font-extralight">Developed by Norman (UQ8) 2024</h1>
             </div>
         </main>
     );
@@ -276,8 +277,8 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
     return(
         <div 
         draggable 
-        className= {`${addedMembers.includes(memberName) ? 'pointer-events-none bg-gray-300' : 'bg-purple-200 hover:bg-purple-300'}
-            p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1 shadow-md`}
+        className= {`${addedMembers.includes(memberName) ? 'pointer-events-none opacity-25' : 'hover:bg-purple-300'}
+            p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1 shadow-md bg-purple-200`}
         onDragStart={(e) => {
             if (handleOnDrag !== undefined) { handleOnDrag(e as unknown as React.DragEvent<HTMLDivElement>, memberName) }
         }}
