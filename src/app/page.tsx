@@ -117,7 +117,7 @@ export default function ManualInterface() {
                             <NewFriendModal 
                                 openModal={openModal} 
                                 setOpenModal={setOpenModal} 
-                                setUQ8_transport_array={setTransportArray} 
+                                setUQ8_transport_array={setAllMembers} 
                             />
 
                             <button className="bg-blue-200  px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
@@ -220,7 +220,7 @@ const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}:
         {
             membersInVehicle.map((name, index) => {
                 return(
-                    <NotDraggableNameEntry 
+                    <InListDraggableNameEntry 
                         key={name} 
                         memberName={name} 
                         index={index} 
@@ -249,7 +249,7 @@ const AddTransportListEntry = ({setTransportArray}: {
     return (
       <div 
         onClick={() => setTransportArray(prev => [...prev, {} as member ])}
-        className="cursor-pointer min-w-[165px] h-[770px] bg-red-100 hover:bg-red-200 
+        className="cursor-pointer min-w-[165px] h-[770px] bg-red-100 hover:bg-red-300 transition-colors duration-300
             rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
             <FaPlusCircle 
                 size={60} 
@@ -277,7 +277,7 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
     return(
         <div 
         draggable 
-        className= {`${addedMembers.includes(memberName) ? 'pointer-events-none opacity-25' : 'hover:bg-purple-300'}
+        className= {`${addedMembers.includes(memberName) ? 'pointer-events-none opacity-25' : 'hover:bg-purple-400 hover:text-white  transition-colors duration-300'}
             p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1 shadow-md bg-purple-200`}
         onDragStart={(e) => {
             if (handleOnDrag !== undefined) { handleOnDrag(e as unknown as React.DragEvent<HTMLDivElement>, memberName) }
@@ -299,7 +299,7 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
  * @param param0 {  memberName, index, setAddedMembers, setMembersInVehicle }
  * @returns a non-draggable component that has been dropped into a TransportListEntry
  */
-const NotDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembersInVehicle }: { 
+const InListDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembersInVehicle }: { 
     memberName: string 
     index: number
     setAddedMembers: React.Dispatch<React.SetStateAction<string[]>>
@@ -313,6 +313,7 @@ const NotDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembers
 
     return(
         <div 
+        draggable
         className={`${index === 0 ? "bg-amber-100": "bg-blue-100"} p-3 w-full text-center drop-shadow-lg rounded-xl relative`}
 
         >
