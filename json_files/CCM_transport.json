@@ -162,7 +162,10 @@
             "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
             "Brendan": {"suburb": "Toowong", "got_car": "no", "present": true},
             "Michael": {"suburb": "Paddington", "got_car": "no", "present": true},
-            "Bonita": {"suburb": "Woolloongabba", "got_car": "no", "present": true}
+            "Bonita": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Jerone": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Iris": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Heidi": {"suburb": "Woolloongabba", "got_car": "no", "present": true}
         },
         "rules": {
             "rule_1": "Ming and Tang live in the same house",
