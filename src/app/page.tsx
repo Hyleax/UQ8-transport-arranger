@@ -144,7 +144,7 @@ export default function ManualInterface() {
                             />
 
                         {/* Select Drivers from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto max-h-[16em]">
+                        <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto h-[16em]">
                             {allMembers
                                 .filter(member => member.got_car === 'yes')
                                 .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
@@ -162,7 +162,7 @@ export default function ManualInterface() {
                         </div>
 
                         {/* Select Riders from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto max-h-[24em]">
+                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto h-[24em]">
                             {allMembers
                                 .filter(member => member.got_car === 'no')
                                 .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
