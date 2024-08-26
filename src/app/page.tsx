@@ -69,8 +69,8 @@ export default function ManualInterface() {
         <main className="flex flex-col items-center">
             
             {/* version update information */}
-            <div className="bg-green-300 w-full flex justify-center p-1">
-                <p> v2 out now 🤩 new features include: <span className="font-extralight">adding of UQ6 members, changing Between Lifegroups </span> </p>
+            <div className="bg-pink-400 w-full flex justify-center p-1">
+                <p> v2.1 out now 🤩 new features include: <span className="font-extralight">Searching for Lifegroup members, removing extra member entries </span> </p>
             </div>
 
             <div className="container h-screen flex flex-col items-center">
