@@ -29,7 +29,14 @@ const NewFriendModal = ({openModal, setOpenModal, setUQ8_transport_array}: {
 
   return (
     <>
-      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal 
+        show={openModal} 
+        onClose={
+          () => {
+            setOpenModal(false)
+            setNewFriendArr([])
+          }
+          }>
         <Modal.Header>Add New Friend</Modal.Header>
         <Modal.Body className="">
           <div className="flex flex-col gap-2">
