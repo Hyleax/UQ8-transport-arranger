@@ -34,6 +34,9 @@ export default function ManualInterface() {
     const [transportArray, setTransportArray] = useState<member[]>([{} as member, {} as member, {} as member, {} as member, {} as member]); // Initialize with 4 empty blocks
     const [addedMembers, setAddedMembers] = useState<string[]>([]);
     const [openModal, setOpenModal] = useState<boolean>(false); // state to open and close modal
+    const [queryMember, setQueryMember] = useState<string>(""); // state to open and close modal
+
+
 
     // Checkbox change handlers
     const handleCheckboxChange = (group: keyof typeof visibleLifegroups) => {
@@ -57,6 +60,10 @@ export default function ManualInterface() {
     const removeTransportListEntry = (id: number) => {
         setTransportArray(prev => prev.filter((_, index) => index !== id));
     };
+
+    const removeMemberFromOptions = (member_name: string) => {
+        setAllMembers(prev => [...prev].filter((x) => x.name !== member_name))
+    }
 
     return (
         <main className="flex flex-col items-center">
@@ -128,9 +135,20 @@ export default function ManualInterface() {
                             </button>
                         </div>
 
+                        <input 
+                            type="text" 
+                            className=" border-2 border-slate-300 shadow-xl rounded-md w-full" 
+                            placeholder="Search for Lifegroup members..."
+                            value={queryMember}
+                            onChange={(e) => setQueryMember(e.target.value) }
+                            />
+
                         {/* Select Drivers from here */}
                         <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto max-h-[16em]">
-                            {allMembers.filter(member => member.got_car === 'yes').map(member => (
+                            {allMembers
+                                .filter(member => member.got_car === 'yes')
+                                .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
+                                .map(member => (
                                 <DraggableNameEntry 
                                     key={member.name} 
                                     handleOnDrag={handleOnDrag} 
@@ -138,13 +156,17 @@ export default function ManualInterface() {
                                     hasCar={true} 
                                     suburb={member.suburb} 
                                     addedMembers={addedMembers} 
+                                    removeMemberFromOptions ={removeMemberFromOptions}
                                 />
                             ))}
                         </div>
 
                         {/* Select Riders from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto max-h-[27em]">
-                            {allMembers.filter(member => member.got_car === 'no').map(member => (
+                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto max-h-[24em]">
+                            {allMembers
+                                .filter(member => member.got_car === 'no')
+                                .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
+                                .map(member => (
                                 <DraggableNameEntry 
                                     key={member.name} 
                                     handleOnDrag={handleOnDrag} 
@@ -152,6 +174,7 @@ export default function ManualInterface() {
                                     hasCar={false} 
                                     suburb={member.suburb} 
                                     addedMembers={addedMembers} 
+                                    removeMemberFromOptions={removeMemberFromOptions}
                                 />
                             ))}
                         </div>
@@ -266,12 +289,13 @@ const AddTransportListEntry = ({setTransportArray}: {
  * @param param0 { handleOnDrag, memberName, hasCar, addedMembers, suburb }
  * @returns a Draggable component that can be dragged and dropped to add a person to a TransportListEntry
  */
-const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, suburb }: {
+const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, suburb, removeMemberFromOptions }: {
     handleOnDrag: (e: React.DragEvent<HTMLDivElement>, content: string) => void
     memberName: string
     hasCar: boolean
     addedMembers: string[]
     suburb: string
+    removeMemberFromOptions: (member_name: string) => void
     }) => {
    
     return(
@@ -284,7 +308,15 @@ const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, su
         }}
 
         >
-            { hasCar && <span className="absolute top-0 right-0 pr-1">🚗</span> }
+            <span className="absolute top-1 right-1 border border-black rounded-full">
+                <RxCross1
+                    className="hover:text-black hover:bg-red-200 rounded-full"
+                    size={12}
+                    onClick={() => removeMemberFromOptions(memberName)}
+                />
+            </span>
+
+            { hasCar && <span className="absolute bottom-0 right-0 pr-1">🚗</span> }
 
             <p className="text-xs font-bold text-left w-full">{ memberName } <span className="text-xs italic font-extralight">({ suburb })</span></p>
         </div>
