@@ -157,15 +157,14 @@
             "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
             "Conrad": {"suburb": "Logan", "got_car": "yes", "present": true},
             "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
-            "Cheri": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
             "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
             "Brendan": {"suburb": "Toowong", "got_car": "no", "present": true},
             "Michael": {"suburb": "Paddington", "got_car": "no", "present": true},
             "Bonita": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Jerone": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-            "Iris": {"suburb": "St. Lucia", "got_car": "no", "present": true},
-            "Heidi": {"suburb": "Woolloongabba", "got_car": "no", "present": true}
+            "Iris": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true}
         },
         "rules": {
             "rule_1": "Ming and Tang live in the same house",
