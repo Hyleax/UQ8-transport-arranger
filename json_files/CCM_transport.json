@@ -164,7 +164,11 @@
             "Bonita": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Jerone": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Iris": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
+            "Best": {"suburb": "Southbank", "got_car": "no", "present": true},
+            "Tricia": {"suburb": "Spring Hill", "got_car": "no", "present": true},
+            "Annie": {"suburb": "Sunnybank", "got_car": "no", "present": true},
             "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true}
+            
         },
         "rules": {
             "rule_1": "Ming and Tang live in the same house",
