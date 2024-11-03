@@ -168,7 +168,8 @@
             "Annie": {"suburb": "Sunnybank", "got_car": "no", "present": true},
             "Nick Law": {"suburb": "Richlands", "got_car": "yes", "present": true},
             "Ellen": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-            "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true}
+            "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Mark Ismail": {"suburb": "St. Lucia", "got_car": "no", "present": true}
             
         },
         "rules": {
