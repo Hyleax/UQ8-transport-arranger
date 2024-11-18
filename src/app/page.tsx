@@ -9,6 +9,24 @@ import ccm_TD from '../../json_files/CCM_transport.json'; // import CCM transpor
 
 // components
 import NewFriendModal, { member } from "./components/Modal";
+import { DragDropContext, Draggable, Droppable, DropResult, Placeholder } from "react-beautiful-dnd";
+
+// VersionBanner Component
+// This functional component renders a banner displaying the latest version and its new features.
+const VersionBanner = () => {
+    return (
+        <div className="bg-yellow-300 w-full overflow-hidden flex justify-center p-1">
+            <div className="whitespace-nowrap animate-[marquee_10s_linear_infinite]">
+                <p className="inline-block">
+                    v3.0 out now 🤩 new features include: 
+                    <span className="font-extralight"> extensive drag and drop functionality, able to drag members from car to another</span>
+                </p>
+            </div>
+        </div>
+    );
+};
+
+
 
 /**
  * 
@@ -25,16 +43,21 @@ export default function ManualInterface() {
 
     const uq8Members = Object.entries(ccm_TD.UQ8_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
     const uq6Members = Object.entries(ccm_TD.UQ6_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
-    
     const [allMembers, setAllMembers] = useState<member[]>(uq8Members);
-    
-    const membersWithCar = allMembers.filter(member => member.got_car === 'yes');
-    const sortedArrWithoutDrivers = allMembers.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb));
-    
-    const [transportArray, setTransportArray] = useState<member[]>([{} as member, {} as member, {} as member, {} as member, {} as member]); // Initialize with 4 empty blocks
-    const [addedMembers, setAddedMembers] = useState<string[]>([]);
+
     const [openModal, setOpenModal] = useState<boolean>(false); // state to open and close modal
-    const [queryMember, setQueryMember] = useState<string>(""); // state to open and close modal
+    const [queryMember, setQueryMember] = useState<string>(""); 
+
+
+    // state variables to represent each car column
+    const [drivers, setDrivers] = useState<member[]>([]);
+    const [nonDrivers, setNonDrivers] = useState<member[]>([]);
+    const [car1, setCar1] = useState<member[]>([]);
+    const [car2, setCar2] = useState<member[]>([]);
+    const [car3, setCar3] = useState<member[]>([]);
+    const [car4, setCar4] = useState<member[]>([]);
+    const [car5, setCar5] = useState<member[]>([]);
+    const [car6, setCar6] = useState<member[]>([]);
 
 
 
@@ -51,27 +74,154 @@ export default function ManualInterface() {
         setAllMembers(selectedMembers);
     }, [visibleLifegroups]);
 
-    // drag function
-    const handleOnDrag = (e: React.DragEvent<HTMLDivElement>, content: string) => {
-        e.dataTransfer.setData('memberName', content);
-    };
 
-    // remove transport list entry
-    const removeTransportListEntry = (id: number) => {
-        setTransportArray(prev => prev.filter((_, index) => index !== id));
-    };
+    useEffect(() => {
+        setDrivers(allMembers.filter(member => member.got_car === 'yes').sort((a, b) => a.suburb.localeCompare(b.suburb)))
+        setNonDrivers(allMembers.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb)))
+    }, [allMembers])
 
-    const removeMemberFromOptions = (member_name: string) => {
-        setAllMembers(prev => [...prev].filter((x) => x.name !== member_name))
+
+    const handleDragEnd = (result: DropResult) => {
+        const { destination, source, draggableId } = result;
+    
+        if (!destination || source.droppableId === destination.droppableId) return;
+    
+        deletePreviousStateLocal(source.droppableId, draggableId);
+    
+        const member = findItemById(draggableId, [...car1, ...car2, ...car3, ...car4, ...car5, ...car6, ...drivers, ...nonDrivers]);
+        
+        setNewState(destination.droppableId, member as member, destination.index);
+    };
+    
+
+    function deletePreviousStateLocal(sourceDroppableId: string, memberIdName: string) {
+
+
+        switch (sourceDroppableId) {
+            case "1":
+                setCar1(removeItemById(memberIdName, car1));
+                break;
+            case "2":
+                setCar2(removeItemById(memberIdName, car2));
+                break;
+            case "3":
+                setCar3(removeItemById(memberIdName, car3));
+                break;
+            case "4":
+                setCar4(removeItemById(memberIdName, car4));
+                break;
+            case "5":
+                setCar5(removeItemById(memberIdName, car5));
+                break;
+            case "6":
+                setCar6(removeItemById(memberIdName, car6));
+                break;              
+
+            case "drivers":
+                setDrivers(removeItemById(memberIdName, drivers));
+                break;
+            case "nonDrivers":
+                setNonDrivers(removeItemById(memberIdName, nonDrivers));
+                break;
+        }
+
+    }
+
+    function deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean) {
+
+
+        switch (sourceDroppableId) {
+            case "1":
+                setCar1(removeItemById(memberIdName, car1));
+                repopulateSelectionArea()
+                break;
+            case "2":
+                setCar2(removeItemById(memberIdName, car2));
+                repopulateSelectionArea()
+                break;
+            case "3":
+                setCar3(removeItemById(memberIdName, car3));
+                repopulateSelectionArea()
+                break;
+            case "4":
+                setCar4(removeItemById(memberIdName, car4));
+                repopulateSelectionArea()
+                break;
+            case "5":
+                setCar5(removeItemById(memberIdName, car5));
+                repopulateSelectionArea()
+                break;
+            case "6":
+                setCar6(removeItemById(memberIdName, car6));
+                repopulateSelectionArea()
+                break;              
+            case "drivers":
+                setDrivers(removeItemById(memberIdName, drivers));
+                break;
+            case "nonDrivers":
+                setNonDrivers(removeItemById(memberIdName, nonDrivers));
+                break;
+        }
+
+        function repopulateSelectionArea() {
+            if (hasCar) {
+                setDrivers(prev => [...prev, {suburb: suburb, name: memberIdName, got_car: hasCar ? 'yes' : 'no'} as member].sort((a, b) => a.suburb.localeCompare(b.suburb)))
+            } else {
+                setNonDrivers(prev => [...prev, {suburb: suburb, name: memberIdName, got_car: hasCar ? 'yes' : 'no'} as member].sort((a, b) => a.suburb.localeCompare(b.suburb)))
+
+            }
+        }
+
+    }
+   
+    function setNewState(destinationDroppableId: string, member: member, index: number) {
+        function insertAt(array: member[], item: member, index: number): member[] {
+            const newArray = [...array];
+            newArray.splice(index, 0, item); // Insert item at the specified index
+            return newArray;
+        }
+    
+        switch (destinationDroppableId) {
+            case "1":
+                setCar1(insertAt(car1, member, index));
+                break;
+            case "2":
+                setCar2(insertAt(car2, member, index));
+                break;
+            case "3":
+                setCar3(insertAt(car3, member, index));
+                break;
+            case "4":
+                setCar4(insertAt(car4, member, index));
+                break;
+            case "5":
+                setCar5(insertAt(car5, member, index));
+                break;
+            case "6":
+                setCar6(insertAt(car6, member, index));
+                break;
+            case "drivers":
+                setDrivers(insertAt(drivers, member, index));
+                break;
+            case "nonDrivers":
+                setNonDrivers(insertAt(nonDrivers, member, index));
+                break;
+        }
+    }
+
+    function findItemById(memberIdName: string, array: member[]) {
+        return array.find((m) => m.name === memberIdName);
+    }
+
+    function removeItemById(memberIdName: string, array: member[]) {
+        return array.filter((m) => m.name != memberIdName);
     }
 
     return (
         <main className="flex flex-col items-center">
             
             {/* version update information */}
-            <div className="bg-pink-400 w-full flex justify-center p-1">
-                <p> v2.1 out now 🤩 new features include: <span className="font-extralight">Searching for Lifegroup members, removing extra member entries </span> </p>
-            </div>
+            <VersionBanner/>
 
             <div className="container h-screen flex flex-col items-center">
                 <h1 className="text-2xl p-2 mt-2">CCM Transport Arranger</h1>
@@ -99,89 +249,114 @@ export default function ManualInterface() {
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 flex w-full justify-between">
-                    {/* drop members here **LEFT SIDE** */}
-                    <div className="flex gap-4 items-center max-w-[70%] overflow-x-auto">
-                        {transportArray?.map((_, index) => (
-                            <TransportListEntry 
-                                key={index} 
-                                number={index} 
-                                setAddedMembers={setAddedMembers} 
-                                removeTransportListEntry={removeTransportListEntry} 
-                            />
-                        ))}
-                        <AddTransportListEntry setTransportArray={setTransportArray} />
-                    </div>
+                <DragDropContext onDragEnd={handleDragEnd}>
 
-                    {/* add and select members here **RIGHT SIDE** */}
-                    <div className="flex flex-col justify-center items-center w-[400px] gap-2">
-                        <div className="flex justify-between gap-2 w-full">
-                            {/* add temp member button */}
-                            <button onClick={() => setOpenModal(prev => !prev)} className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">
-                                Add New Friend
-                            </button>
-
-                            <NewFriendModal 
-                                openModal={openModal} 
-                                setOpenModal={setOpenModal} 
-                                setUQ8_transport_array={setAllMembers} 
-                            />
-
-                            <button className="bg-blue-200  px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
-                                Automatically Arrange Transport
-                            </button>
-                            <button className="bg-emerald-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
-                                Export Format
-                            </button>
+                    <div className="flex-1 flex w-full justify-between">
+                        {/* drop members here **LEFT SIDE** */}
+                        <div className="flex gap-4 items-center max-w-[70%] overflow-x-auto">
+                            <CarColumn passengers={car1} id={"1"} deletePreviousState={deletePreviousState}/>
+                            <CarColumn passengers={car2} id={"2"} deletePreviousState={deletePreviousState}/>
+                            <CarColumn passengers={car3} id={"3"} deletePreviousState={deletePreviousState}/>
+                            <CarColumn passengers={car4} id={"4"} deletePreviousState={deletePreviousState}/>
+                            <CarColumn passengers={car5} id={"5"} deletePreviousState={deletePreviousState}/>
+                            <CarColumn passengers={car6} id={"6"} deletePreviousState={deletePreviousState}/>
                         </div>
 
-                        <input 
-                            type="text" 
-                            className=" border-2 border-slate-300 shadow-xl rounded-md w-full" 
-                            placeholder="Search for Lifegroup members..."
-                            value={queryMember}
-                            onChange={(e) => setQueryMember(e.target.value) }
-                            />
+                        {/* add and select members here **RIGHT SIDE** */}
+                        <div className="flex flex-col justify-center items-center w-[400px] gap-2">
+                            <div className="flex justify-between gap-2 w-full">
+                                {/* add temp member button */}
+                                <button onClick={() => setOpenModal(prev => !prev)} className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">
+                                    Add New Friend
+                                </button>
 
-                        {/* Select Drivers from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto h-[16em]">
-                            {allMembers
-                                .filter(member => member.got_car === 'yes')
-                                .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
-                                .map(member => (
-                                <DraggableNameEntry 
-                                    key={member.name} 
-                                    handleOnDrag={handleOnDrag} 
-                                    memberName={member.name} 
-                                    hasCar={true} 
-                                    suburb={member.suburb} 
-                                    addedMembers={addedMembers} 
-                                    removeMemberFromOptions ={removeMemberFromOptions}
+                                <NewFriendModal 
+                                    openModal={openModal} 
+                                    setOpenModal={setOpenModal} 
+                                    setUQ8_transport_array={setAllMembers} 
                                 />
-                            ))}
-                        </div>
 
-                        {/* Select Riders from here */}
-                        <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto h-[24em]">
-                            {allMembers
-                                .filter(member => member.got_car === 'no')
-                                .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
-                                .map(member => (
-                                <DraggableNameEntry 
-                                    key={member.name} 
-                                    handleOnDrag={handleOnDrag} 
-                                    memberName={member.name} 
-                                    hasCar={false} 
-                                    suburb={member.suburb} 
-                                    addedMembers={addedMembers} 
-                                    removeMemberFromOptions={removeMemberFromOptions}
+                                <button className="bg-blue-200  px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
+                                    Automatically Arrange Transport
+                                </button>
+                                <button className="bg-emerald-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
+                                    Export Format
+                                </button>
+                            </div>
+
+                            <input 
+                                type="text" 
+                                className=" border-2 border-slate-300 shadow-xl rounded-md w-full" 
+                                placeholder="Search for Lifegroup members..."
+                                value={queryMember}
+                                onChange={(e) => setQueryMember(e.target.value) }
                                 />
-                            ))}
+
+                            {/* Select Drivers from here */}
+                            <div className="flex flex-wrap border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto h-[16em]">
+                                <Droppable droppableId={"drivers"}>
+                                    {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.droppableProps}
+                                                    className={`p-1 transition-colors duration-200  flex flex-grow flex-wrap gap-3 min-h-[100px]${
+                                                snapshot.isDraggingOver ? 'bg-blue-200' : ''
+                                            }`}
+                                            >
+                                                {drivers
+                                                .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
+                                                .map((p, index) => (
+                                                    <PassengerEntry
+                                                        key={p.name}
+                                                        memberName={p.name} 
+                                                        hasCar={p.got_car === 'yes' ? true : false} 
+                                                        suburb={p.suburb} 
+                                                        index={index}
+                                                        dropId={'drivers'}
+                                                        deletePreviousState={deletePreviousState}
+                                                    />
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                </Droppable>
+                            </div>
+
+                            {/* Select Riders from here */}
+                            <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto h-[24em]">
+                                <Droppable droppableId={"nonDrivers"}>
+                                        {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.droppableProps}
+                                                        className={`p-1 transition-colors duration-200  flex flex-grow flex-wrap gap-3 min-h-[100px]${
+                                                    snapshot.isDraggingOver ? 'bg-blue-200' : ''
+                                                }`}
+                                                >
+                                                    {nonDrivers
+                                                    .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
+                                                    .map((p, index) => (
+                                                        <PassengerEntry
+                                                            key={p.name}
+                                                            memberName={p.name} 
+                                                            hasCar={p.got_car === 'yes' ? true : false} 
+                                                            suburb={p.suburb} 
+                                                            index={index}
+                                                            dropId={'nonDrivers'}
+                                                            deletePreviousState={deletePreviousState}
+                                                        />
+                                                    ))}
+                                                    {provided.placeholder}
+                                                </div>
+                                            )}
+                                    </Droppable>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </DragDropContext>
 
-                <h1 className="text-sm p-2 mt-3 font-sans font-extralight">Developed by Norman (UQ8) 2024</h1>
+
+                <h1 className="text-sm p-2 mt-3 font-sans font-extralight">Developed by Norman Yap © 2024 for Life Group purposes within CCM & Hope Church</h1>
             </div>
         </main>
     );
@@ -192,71 +367,93 @@ export default function ManualInterface() {
 
 
 
+const CarColumn = ({ passengers, id, deletePreviousState  }: {
+    passengers: member[]
+    id: string
+    deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean): void
+}) => {
+    return(
+        <div className="min-w-[165px] h-[770px] bg-slate-200 
+          rounded-md flex flex-col gap-4 shadow-lg items-center relative">
+            <Droppable droppableId={id}>
+                {(provided, snapshot) => (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                                className={`p-1 rounded-md transition-colors duration-200  gap-5 flex flex-col flex-grow h-full ${
+                            snapshot.isDraggingOver ? 'bg-slate-300 h-full' : ''
+                        }`}
+                        >
+                            {passengers.map((p ,index) => {
+
+                                return (
+                                    <PassengerEntry
+                                    key={p.name}
+                                    memberName={p.name} 
+                                    hasCar={p.got_car === 'yes' ? true : false} 
+                                    suburb={p.suburb} 
+                                    index={index}
+                                    dropId={id}
+                                    deletePreviousState={deletePreviousState}
+                                />
+                                )
+                            })}
+                            {provided.placeholder}
+                        </div>
+                    )}
+            </Droppable>
+
+            { passengers.length > 4 && <div className="text-red-500 absolute top-[-30px]">Car is full</div> }
+        </div>
+    )
+}
 
 
 
 
+const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePreviousState }: {
+    memberName: string
+    hasCar: boolean
+    suburb: string
+    index: number
+    dropId: string
+    deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean): void
+}) => {
+   
+
+    return(
+        <Draggable draggableId={`${memberName}`} key={memberName} index={index}>
+        {(provided, snapshot) => (
+            <div
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                ref={provided.innerRef}
+                className={`hover:bg-purple-400 hover:text-white transition-colors duration-300 
+                    p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap 
+                    items-center justify-center gap-1 shadow-md ${dropId === 'drivers' || dropId === "nonDrivers" ? 'bg-purple-300' : 'bg-yellow-200'}`}
+            >
+            <span className="absolute top-1 right-1 border border-black rounded-full">
+                    <RxCross1
+                    onClick={() => deletePreviousState(dropId, memberName, suburb, hasCar)}
+                        className=" hover:bg-slate-600 hover:text-white rounded-full cursor-pointer"
+                        size={15}
+                    />
+                </span>
+
+                 { (dropId === 'drivers' || dropId === "nonDrivers") && hasCar && <span className="absolute bottom-0 right-0 pr-1 ">🚗 </span>  } 
+
+                { (dropId !== 'drivers' && dropId !== "nonDrivers" && index === 0) && <span className="absolute bottom-0 right-0 pr-1 ">🚗 </span> }   
 
 
-/**
- * 
- * @param param0 setAddedMembers
- * @returns a component representing a singular vehicle list that can potentially contain one or more people
- */
-const TransportListEntry = ({setAddedMembers, number, removeTransportListEntry}: {
-        setAddedMembers: React.Dispatch<React.SetStateAction<string[]>>
-        number: number
-        removeTransportListEntry: (id: number) => void
-    }) => {
+                <p className="text-xs font-bold text-left w-full">{ memberName } <span className="text-xs italic font-extralight">({ suburb })</span></p>
+            </div>
+        )}
+    </Draggable>
+    )
 
-    const [membersInVehicle, setMembersInVehicle] = useState<string []>([])
-
-    const handleOnDrop = (e: React.DragEvent) => {
-        const memberName = e.dataTransfer.getData('memberName') as string
-        if (membersInVehicle.length < 5) {
-            setMembersInVehicle(prev => [...prev, memberName])
-            setAddedMembers(prev => [...prev, memberName])
-        }
-    }
+}
 
 
-    return (
-      <div 
-        onDrop={(e) => {
-        if (handleOnDrop !== undefined) { handleOnDrop(e) }
-        }} 
-        onDragOver={(e) => e.preventDefault()}
-        className="min-w-[165px] h-[770px] bg-slate-200 
-          rounded-md flex flex-col gap-4 shadow-lg items-center py-2 px-3 relative">
-
-            { membersInVehicle.length >= 5 && <h1 className="absolute top-[-30px] text-xl text-red-500">Car is Full</h1> }
-
-            {
-              number === 9999 &&
-
-              <button 
-                onClick={() => removeTransportListEntry(number)}
-                className="absolute bottom-3 bg-red-700 hover:bg-red-800 p-2 w-[80%] rounded-lg text-white shadow-lg text-xs">remove
-              </button>
-            }
-
-        {
-            membersInVehicle.map((name, index) => {
-                return(
-                    <InListDraggableNameEntry 
-                        key={name} 
-                        memberName={name} 
-                        index={index} 
-                        setAddedMembers={setAddedMembers}
-                        setMembersInVehicle={setMembersInVehicle}
-                        />
-                )
-            })
-        }
-      </div>
-    );
-  };
-  
 
 
 
@@ -282,76 +479,3 @@ const AddTransportListEntry = ({setTransportArray}: {
   }
 
 
-
-
-/**
- * 
- * @param param0 { handleOnDrag, memberName, hasCar, addedMembers, suburb }
- * @returns a Draggable component that can be dragged and dropped to add a person to a TransportListEntry
- */
-const DraggableNameEntry = ({ handleOnDrag, memberName, hasCar, addedMembers, suburb, removeMemberFromOptions }: {
-    handleOnDrag: (e: React.DragEvent<HTMLDivElement>, content: string) => void
-    memberName: string
-    hasCar: boolean
-    addedMembers: string[]
-    suburb: string
-    removeMemberFromOptions: (member_name: string) => void
-    }) => {
-   
-    return(
-        <div 
-        draggable 
-        className= {`${addedMembers.includes(memberName) ? 'pointer-events-none opacity-25' : 'hover:bg-purple-400 hover:text-white  transition-colors duration-300'}
-            p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap items-center justify-center gap-1 shadow-md bg-purple-200`}
-        onDragStart={(e) => {
-            if (handleOnDrag !== undefined) { handleOnDrag(e as unknown as React.DragEvent<HTMLDivElement>, memberName) }
-        }}
-
-        >
-            <span className="absolute top-1 right-1 border border-black rounded-full">
-                <RxCross1
-                    className="hover:text-black hover:bg-red-200 rounded-full"
-                    size={12}
-                    onClick={() => removeMemberFromOptions(memberName)}
-                />
-            </span>
-
-            { hasCar && <span className="absolute bottom-0 right-0 pr-1">🚗</span> }
-
-            <p className="text-xs font-bold text-left w-full">{ memberName } <span className="text-xs italic font-extralight">({ suburb })</span></p>
-        </div>
-    )
-}
-
-
-
-
-/**
- * 
- * @param param0 {  memberName, index, setAddedMembers, setMembersInVehicle }
- * @returns a non-draggable component that has been dropped into a TransportListEntry
- */
-const InListDraggableNameEntry = ({  memberName, index, setAddedMembers, setMembersInVehicle }: { 
-    memberName: string 
-    index: number
-    setAddedMembers: React.Dispatch<React.SetStateAction<string[]>>
-    setMembersInVehicle: React.Dispatch<React.SetStateAction<string[]>>
-    }) => {
-
-    const handleClick = () => {
-        setAddedMembers(prev => [...prev].filter((p) => p !== memberName))
-        setMembersInVehicle(prev => [...prev].filter((p) => p !== memberName))
-    }
-
-    return(
-        <div 
-        draggable
-        className={`${index === 0 ? "bg-amber-100": "bg-blue-100"} p-3 w-full text-center drop-shadow-lg rounded-xl relative`}
-
-        >
-            <span onClick={handleClick} className="absolute top-0 right-0 pr-2 pt-1 hover:text-slate-400 cursor-pointer"><RxCross1 size={10}/></span>   
-            
-            <p className="pl-2 text-left text-sm">{ memberName } <span className="text-xs">{`${index === 0 ? "🚗": ""}`}</span></p>
-        </div>
-    )
-}
