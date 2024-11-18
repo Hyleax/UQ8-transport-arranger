@@ -87,8 +87,6 @@ export default function ManualInterface() {
     const handleDragEnd = (result: DropResult) => {
         const { destination, source, draggableId } = result;
     
-        console.log(result);
-    
         // If there is no destination, exit early
         if (!destination) return;
     
@@ -505,7 +503,8 @@ const CarColumn = ({ passengers, id, deletePreviousState  }: {
                     )}
             </Droppable>
 
-            { passengers.length > 4 && <div className="text-red-500 absolute top-[-30px]">Car is full</div> }
+            { passengers.length === 5 && <div className="text-red-500 absolute top-[-30px]">Car is full</div> }
+            { passengers.length > 5 && <div className="text-red-500 absolute top-[-50px] text-center">Capacity Exceeded!! Remove people</div> }
         </div>
     )
 }
@@ -530,9 +529,17 @@ const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePrev
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}
-                className={`hover:bg-purple-400 hover:text-white transition-colors duration-300 
+                className={`hover:bg-emerald-600 hover:text-white transition-colors duration-300 
                     p-3 cursor-pointer w-[150px] h-[50px] text-center rounded-xl relative flex flex-wrap 
-                    items-center justify-center gap-1 shadow-md ${dropId === 'drivers' || dropId === "nonDrivers" ? 'bg-purple-300' : 'bg-yellow-200'}`}
+                    items-center justify-center gap-1 shadow-md 
+                    ${
+                      dropId === 'drivers' || dropId === 'nonDrivers' 
+                        ? 'bg-emerald-400' 
+                        : index === 0 
+                          ? 'bg-blue-400' 
+                          : 'bg-yellow-200'
+                    }`}
+                
             >
             <span className="absolute top-1 right-1 border border-black rounded-full">
                     <RxCross1
