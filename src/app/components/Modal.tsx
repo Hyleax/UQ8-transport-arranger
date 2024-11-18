@@ -25,6 +25,7 @@ const NewFriendModal = ({openModal, setOpenModal, setUQ8_transport_array}: {
   const handleAdd = () => {
     setUQ8_transport_array(prev => [...prev, ...newFriendArr.filter(x => x.name !== "" || x.suburb !== "")])
     setOpenModal(false)
+    setNewFriendArr([])
   }
 
   return (
