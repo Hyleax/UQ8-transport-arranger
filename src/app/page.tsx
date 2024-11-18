@@ -7,6 +7,9 @@ import { FaPlusCircle } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import ccm_TD from '../../json_files/CCM_transport.json'; // import CCM transport data   
 
+// import LG car presets
+import { uq8_uni_to_home_preset } from "./Presets"
+
 // components
 import NewFriendModal, { member } from "./components/Modal";
 import { DragDropContext, Draggable, Droppable, DropResult, Placeholder } from "react-beautiful-dnd";
@@ -18,8 +21,8 @@ const VersionBanner = () => {
         <div className="bg-yellow-300 w-full overflow-hidden flex justify-center p-1">
             <div className="whitespace-nowrap animate-[marquee_10s_linear_infinite]">
                 <p className="inline-block">
-                    v3.0 out now 🤩 new features include: 
-                    <span className="font-extralight"> extensive drag and drop functionality, able to drag members from car to another</span>
+                    v3.1 out now 🤩 new features include: 
+                    <span className="font-extralight"> extensive drag and drop functionality, able to drag members from car to another, lifegroup presets</span>
                 </p>
             </div>
         </div>
@@ -283,8 +286,18 @@ export default function ManualInterface() {
         }
 
     }
-   
 
+    const [dropdownState, setDropdownState] = useState(false)
+    const selectPreset = () => {
+        setDropdownState(false)
+
+        // set vehicle states for preset
+        setCar1(uq8_uni_to_home_preset['car1'])
+        setCar2(uq8_uni_to_home_preset['car2'])
+        setCar3(uq8_uni_to_home_preset['car3'])
+        setCar4(uq8_uni_to_home_preset['car4'])
+    }
+   
 
     return (
         <main className="flex flex-col items-center">
@@ -297,7 +310,7 @@ export default function ManualInterface() {
 
                 {/* Select Lifegroup */}
                 <div className="w-full flex justify-center items-center gap-4 font-extralight">
-                    <p className="text-xl">Lifegroups:</p>
+                    <p className="text-xl">Lifegroups Members:</p>
                     <label className="flex items-center gap-1 text-xl cursor-pointer">
                         <span>UQ8</span>
                         <input 
@@ -314,7 +327,19 @@ export default function ManualInterface() {
                             onChange={() => handleCheckboxChange('UQ6')} 
                         />
                     </label>
-                    <p className="font-light text-blue-500">Select lifegroups to view members</p>
+
+                    <div className="relative w-[180px]">
+                        <button onClick={() => setDropdownState(prev => !prev)} className="font-light text-blue-500 bg-slate-100 hover:bg-slate-300 p-2 shadow-md rounded-lg w-full">Select presets</button>
+                        {
+                         dropdownState &&
+                         
+                         <div className="absolute z-20 mt-2 w-full bg-white border border-gray-300 rounded-xl shadow-lg"> 
+                            <ul> 
+                                <li onClick={selectPreset} className=" px-4 py-2 hover:bg-gray-100 cursor-pointer">UQ8 Uni to Home</li> 
+                            </ul>
+                        </div>
+                        }
+                    </div>
                 </div>
 
                 {/* Main Content */}
@@ -351,6 +376,7 @@ export default function ManualInterface() {
                                 <button className="bg-emerald-300 px-5 py-3 rounded-xl drop-shadow-lg text-sm opacity-40" disabled>
                                     Export Format
                                 </button>
+                                
                             </div>
 
                             <input 
