@@ -84,19 +84,128 @@ export default function ManualInterface() {
     const handleDragEnd = (result: DropResult) => {
         const { destination, source, draggableId } = result;
     
-        if (!destination || source.droppableId === destination.droppableId) return;
+        console.log(result);
     
+        // If there is no destination, exit early
+        if (!destination) return;
+    
+        // If moving within the same list but different index, reorder
+        if (source.droppableId === destination.droppableId) {
+            if (source.index !== destination.index) {
+                reorderWithinCar(source.droppableId, source.index, destination.index);
+            }
+            return;
+        }
+    
+        // Delete the member from its original location
         deletePreviousStateLocal(source.droppableId, draggableId);
     
-        const member = findItemById(draggableId, [...car1, ...car2, ...car3, ...car4, ...car5, ...car6, ...drivers, ...nonDrivers]);
-        
+        // Find the member that was dragged
+        const member = findItemById(draggableId, [
+            ...car1, ...car2, ...car3, ...car4, ...car5, ...car6, ...drivers, ...nonDrivers
+        ]);
+    
+        // Insert the member into the new location
         setNewState(destination.droppableId, member as member, destination.index);
     };
     
-
+    // Function to reorder items within the same car array
+    const reorderWithinCar = (droppableId: string, startIndex: number, endIndex: number) => {
+        let updatedList;
+    
+        switch (droppableId) {
+            case "1":
+                updatedList = reorderList(car1, startIndex, endIndex);
+                setCar1(updatedList);
+                break;
+            case "2":
+                updatedList = reorderList(car2, startIndex, endIndex);
+                setCar2(updatedList);
+                break;
+            case "3":
+                updatedList = reorderList(car3, startIndex, endIndex);
+                setCar3(updatedList);
+                break;
+            case "4":
+                updatedList = reorderList(car4, startIndex, endIndex);
+                setCar4(updatedList);
+                break;
+            case "5":
+                updatedList = reorderList(car5, startIndex, endIndex);
+                setCar5(updatedList);
+                break;
+            case "6":
+                updatedList = reorderList(car6, startIndex, endIndex);
+                setCar6(updatedList);
+                break;
+            case "drivers":
+                updatedList = reorderList(drivers, startIndex, endIndex);
+                setDrivers(updatedList);
+                break;
+            case "nonDrivers":
+                updatedList = reorderList(nonDrivers, startIndex, endIndex);
+                setNonDrivers(updatedList);
+                break;
+        }
+    };
+    
+    // Helper function to reorder a list
+    const reorderList = (list: member[], startIndex: number, endIndex: number): member[] => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1); // Remove the item
+        result.splice(endIndex, 0, removed); // Insert it at the new position
+        return result;
+    };
+    
+    // Function to remove a member from the given car array
+    function removeItemById(memberIdName: string, array: member[]) {
+        return array.filter((m) => m.name !== memberIdName);
+    }
+    
+    // Function to insert a member at a specific index
+    function insertAt(array: member[], item: member, index: number): member[] {
+        const newArray = [...array];
+        newArray.splice(index, 0, item);
+        return newArray;
+    }
+    
+    // Update the state in the appropriate car or category
+    function setNewState(destinationDroppableId: string, member: member, index: number) {
+        switch (destinationDroppableId) {
+            case "1":
+                setCar1(insertAt(car1, member, index));
+                break;
+            case "2":
+                setCar2(insertAt(car2, member, index));
+                break;
+            case "3":
+                setCar3(insertAt(car3, member, index));
+                break;
+            case "4":
+                setCar4(insertAt(car4, member, index));
+                break;
+            case "5":
+                setCar5(insertAt(car5, member, index));
+                break;
+            case "6":
+                setCar6(insertAt(car6, member, index));
+                break;
+            case "drivers":
+                setDrivers(insertAt(drivers, member, index));
+                break;
+            case "nonDrivers":
+                setNonDrivers(insertAt(nonDrivers, member, index));
+                break;
+        }
+    }
+    
+    // Find a member by its ID from a given array
+    function findItemById(memberIdName: string, array: member[]) {
+        return array.find((m) => m.name === memberIdName);
+    }
+    
+    // Delete the previous state for the given member from the source droppable list
     function deletePreviousStateLocal(sourceDroppableId: string, memberIdName: string) {
-
-
         switch (sourceDroppableId) {
             case "1":
                 setCar1(removeItemById(memberIdName, car1));
@@ -115,8 +224,7 @@ export default function ManualInterface() {
                 break;
             case "6":
                 setCar6(removeItemById(memberIdName, car6));
-                break;              
-
+                break;
             case "drivers":
                 setDrivers(removeItemById(memberIdName, drivers));
                 break;
@@ -124,9 +232,11 @@ export default function ManualInterface() {
                 setNonDrivers(removeItemById(memberIdName, nonDrivers));
                 break;
         }
-
     }
-
+    
+    
+    
+    
     function deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean) {
 
 
@@ -174,48 +284,7 @@ export default function ManualInterface() {
 
     }
    
-    function setNewState(destinationDroppableId: string, member: member, index: number) {
-        function insertAt(array: member[], item: member, index: number): member[] {
-            const newArray = [...array];
-            newArray.splice(index, 0, item); // Insert item at the specified index
-            return newArray;
-        }
-    
-        switch (destinationDroppableId) {
-            case "1":
-                setCar1(insertAt(car1, member, index));
-                break;
-            case "2":
-                setCar2(insertAt(car2, member, index));
-                break;
-            case "3":
-                setCar3(insertAt(car3, member, index));
-                break;
-            case "4":
-                setCar4(insertAt(car4, member, index));
-                break;
-            case "5":
-                setCar5(insertAt(car5, member, index));
-                break;
-            case "6":
-                setCar6(insertAt(car6, member, index));
-                break;
-            case "drivers":
-                setDrivers(insertAt(drivers, member, index));
-                break;
-            case "nonDrivers":
-                setNonDrivers(insertAt(nonDrivers, member, index));
-                break;
-        }
-    }
 
-    function findItemById(memberIdName: string, array: member[]) {
-        return array.find((m) => m.name === memberIdName);
-    }
-
-    function removeItemById(memberIdName: string, array: member[]) {
-        return array.filter((m) => m.name != memberIdName);
-    }
 
     return (
         <main className="flex flex-col items-center">
