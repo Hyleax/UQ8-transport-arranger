@@ -70,11 +70,21 @@ export default function ManualInterface() {
     };
 
     useEffect(() => {
-        const selectedMembers = [
+        const availableMembers = [
             ...(visibleLifegroups.UQ8 ? uq8Members : []),
             ...(visibleLifegroups.UQ6 ? uq6Members : [])
         ];
-        setAllMembers(selectedMembers);
+
+
+        const selectedMembers: member[] = [...car1, ...car2, ...car3, ...car4, ...car5, ...car6]
+
+        const remainingMembers = availableMembers.filter(member => !selectedMembers.some(selected => selected.name === member.name))
+
+        setDrivers(remainingMembers.filter(member => member.got_car === 'yes').sort((a, b) => a.suburb.localeCompare(b.suburb)))
+        setNonDrivers(remainingMembers.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb)))
+
+
+        setAllMembers(remainingMembers);
     }, [visibleLifegroups]);
 
 
