@@ -296,6 +296,13 @@ export default function ManualInterface() {
         setCar2(uq8_uni_to_home_preset['car2'])
         setCar3(uq8_uni_to_home_preset['car3'])
         setCar4(uq8_uni_to_home_preset['car4'])
+
+        const selectedMembers: member[] = [...uq8_uni_to_home_preset['car1'], ...uq8_uni_to_home_preset['car2'], ...uq8_uni_to_home_preset['car3'], ...uq8_uni_to_home_preset['car4']]
+
+        const remainingMembers = allMembers.filter(member => !selectedMembers.some(selected => selected.name === member.name))
+
+        setDrivers(remainingMembers.filter(member => member.got_car === 'yes').sort((a, b) => a.suburb.localeCompare(b.suburb)))
+        setNonDrivers(remainingMembers.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb)))
     }
    
 
