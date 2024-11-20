@@ -18,7 +18,7 @@ import { DragDropContext, Draggable, Droppable, DropResult, Placeholder } from "
 // This functional component renders a banner displaying the latest version and its new features.
 const VersionBanner = () => {
     return (
-        <div className="bg-yellow-300 w-full overflow-hidden md:flex hidden justify-center p-1">
+        <div className="bg-yellow-300 w-full overflow-hidden lg:flex hidden justify-center p-1">
             <div className="whitespace-nowrap animate-[marquee_10s_linear_infinite]">
                 <p className="inline-block">
                     v3.1 out now 🤩 new features include: 
@@ -321,12 +321,12 @@ export default function ManualInterface() {
             <VersionBanner/>
 
             <div className="container h-screen flex flex-col items-center">
-                <h1 className="text-2xl p-2 mt-2 md:block hidden">CCM Transport Arranger</h1>
+                <h1 className="text-2xl p-2 mt-2 lg:block hidden">CCM Transport Arranger</h1>
 
                 {/* Select Lifegroup */}
                 <div className="w-full flex justify-center items-center gap-4 font-extralight">
-                    <p className="text-xl md:block hidden">Lifegroup Members:</p>
-                    <label className="flex items-center gap-1 md:text-xl text-xs cursor-pointer ">
+                    <p className="text-xl lg:block hidden">Lifegroup Members:</p>
+                    <label className="flex items-center gap-1 lg:text-xl text-xs cursor-pointer ">
                         <span>UQ8</span>
                         <input 
                             type="checkbox" 
@@ -334,7 +334,7 @@ export default function ManualInterface() {
                             onChange={() => handleCheckboxChange('UQ8')} 
                         />
                     </label>
-                    <label className="flex items-center gap-1 md:text-xl text-xs cursor-pointer">
+                    <label className="flex items-center gap-1 lg:text-xl text-xs cursor-pointer">
                         <span>UQ6</span>
                         <input 
                             type="checkbox" 
@@ -346,8 +346,8 @@ export default function ManualInterface() {
                     <div className="relative w-[180px]">
                         <button 
                             onClick={() => setDropdownState(prev => !prev)} 
-                            className="font-light text-blue-500 md:bg-slate-100 
-                                hover:bg-slate-300 p-2 md:shadow-md rounded-lg w-full md:text-base text-xs">Select presets</button>
+                            className="font-light text-blue-500 lg:bg-slate-100 
+                                hover:bg-slate-300 p-2 lg:shadow-lg rounded-lg w-full lg:text-base text-xs">Select presets</button>
                         {
                          dropdownState &&
                          
@@ -375,8 +375,8 @@ export default function ManualInterface() {
                         </div>
 
                         {/* add and select members here **RIGHT SIDE** */}
-                        <div className="flex flex-col md:justify-center items-center w-[400px] gap-2">
-                            <div className="md:flex hidden justify-between gap-2 w-full">
+                        <div className="flex flex-col lg:justify-center items-center w-[400px] gap-2">
+                            <div className="lg:flex hidden justify-between gap-2 w-full">
                                 {/* add temp member button */}
                                 <button onClick={() => setOpenModal(prev => !prev)} className="bg-red-100 hover:bg-red-200 px-5 py-3 rounded-xl drop-shadow-lg text-sm">
                                     Add New Friend
@@ -399,14 +399,14 @@ export default function ManualInterface() {
 
                             <input 
                                 type="text" 
-                                className=" border-2 border-slate-300 shadow-xl rounded-md w-full hidden" 
+                                className=" border-2 border-slate-300 shadow-xl rounded-lg w-full hidden" 
                                 placeholder="Search for Lifegroup members..."
                                 value={queryMember}
                                 onChange={(e) => setQueryMember(e.target.value) }
                                 />
 
                             {/* Select Drivers from here */}
-                            <div className="flex flex-wrap border-2 shadow-xl mb-2 rounded-md w-full p-3 overflow-y-auto md:max-h-[16em]">
+                            <div className="flex flex-wrap border-2 shadow-xl mb-2 rounded-lg w-full p-3 overflow-y-auto lg:h-[16em] max-h-[16em]">
                                 <Droppable droppableId={"drivers"}>
                                     {(provided, snapshot) => (
                                             <div
@@ -436,7 +436,7 @@ export default function ManualInterface() {
                             </div>
 
                             {/* Select Riders from here */}
-                            <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-md w-full p-3 overflow-y-auto max-h-[24em]">
+                            <div className="flex flex-wrap gap-3 border-2 shadow-xl rounded-lg w-full p-3 overflow-y-auto lg:h-[24em] max-h-[24em]">
                                 <Droppable droppableId={"nonDrivers"}>
                                         {(provided, snapshot) => (
                                                 <div
@@ -487,13 +487,13 @@ const CarColumn = ({ passengers, id, deletePreviousState  }: {
 }) => {
     return(
         <div className="w-[165px]  h-[770px] bg-slate-200 
-          rounded-md flex flex-col gap-4 shadow-lg items-center relative">
+          rounded-lg flex flex-col gap-4 shadow-lg items-center relative">
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
                         <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
-                                className={`p-1 rounded-md transition-colors duration-200  gap-5 flex flex-col flex-grow h-full ${
+                                className={`p-1 rounded-lg transition-colors duration-200  gap-5 flex flex-col flex-grow h-full ${
                             snapshot.isDraggingOver ? 'bg-slate-300 h-full' : ''
                         }`}
                         >
@@ -543,8 +543,8 @@ const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePrev
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}
                 className={`hover:bg-emerald-600 hover:text-white transition-colors duration-300 
-                    p-3 cursor-pointer md:w-[150px] w-[70px] h-[50px] text-center rounded-xl relative flex flex-wrap 
-                    items-center justify-center gap-1 shadow-md 
+                    lg:p-3 p-1 cursor-pointer lg:w-[150px] w-[70px] h-[50px] text-center rounded-xl relative flex flex-wrap 
+                    items-center lg:justify-center gap-1 shadow-lg 
                     ${
                       dropId === 'drivers' || dropId === 'nonDrivers' 
                         ? 'bg-emerald-400' 
@@ -567,7 +567,7 @@ const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePrev
                 { (dropId !== 'drivers' && dropId !== "nonDrivers" && index === 0) && <span className="absolute bottom-0 right-0 pr-1 ">🚗 </span> }   
 
 
-                <p className="md:text-xs text-[8px] font-bold text-left w-full">{ memberName } <span className="md:text-xs text-[8px] italic font-extralight">({ suburb })</span></p>
+                <p className="lg:text-xs text-[8px] font-bold text-left w-full">{ memberName } <span className="lg:text-xs text-[7px] italic font-extralight">({ suburb })</span></p>
             </div>
         )}
     </Draggable>
@@ -592,7 +592,7 @@ const AddTransportListEntry = ({setTransportArray}: {
       <div 
         onClick={() => setTransportArray(prev => [...prev, {} as member ])}
         className="cursor-pointer min-w-[165px] h-[770px] bg-red-100 hover:bg-red-300 transition-colors duration-300
-            rounded-md flex flex-col gap-2 justify-center items-center drop-shadow-md">
+            rounded-lg flex flex-col gap-2 justify-center items-center drop-shadow-lg">
             <FaPlusCircle 
                 size={60} 
             />
