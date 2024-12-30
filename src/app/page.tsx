@@ -39,13 +39,16 @@ export default function ManualInterface() {
     const [visibleLifegroups, setVisibleLifegroups] = useState<{
         UQ8: boolean,
         UQ6: boolean,
+        UQ3: boolean,
     }>({
         UQ8: true,
         UQ6: false,
+        UQ3: false,
     });
 
     const uq8Members = Object.entries(ccm_TD.UQ8_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
     const uq6Members = Object.entries(ccm_TD.UQ6_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
+    const uq3Members = Object.entries(ccm_TD.UQ3_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
     const [allMembers, setAllMembers] = useState<member[]>(uq8Members);
     
     
@@ -74,7 +77,8 @@ export default function ManualInterface() {
     useEffect(() => {
         const availableMembers = [
             ...(visibleLifegroups.UQ8 ? uq8Members : []),
-            ...(visibleLifegroups.UQ6 ? uq6Members : [])
+            ...(visibleLifegroups.UQ6 ? uq6Members : []),
+            ...(visibleLifegroups.UQ3 ? uq3Members : []),
         ];
 
 
@@ -390,6 +394,14 @@ export default function ManualInterface() {
                             onChange={() => handleCheckboxChange('UQ6')} 
                         />
                     </label>
+                    <label className="flex items-center gap-1 xl:text-xl text-xs cursor-pointer">
+                        <span>UQ3</span>
+                        <input 
+                            type="checkbox" 
+                            checked={visibleLifegroups.UQ3} 
+                            onChange={() => handleCheckboxChange('UQ3')} 
+                        />
+                    </label>
 
                     <div className="relative w-[180px]">
                         <button 
@@ -563,47 +575,46 @@ export default function ManualInterface() {
 
 
 
-const CarColumn = ({ passengers, id, deletePreviousState  }: {
+const CarColumn = ({ passengers, id, deletePreviousState }: {
     passengers: member[]
     id: string
     deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean): void
 }) => {
-    return(
-        <div className="w-[165px]  h-[400px] bg-slate-200 
-          rounded-lg flex flex-col gap-4 shadow-lg items-center relative">
+    // Determine the background color class based on passengers count
+    const isFull = passengers.length === 5;
+    const isExceeded = passengers.length > 5;
+    const bgColorClass = isExceeded ? 'bg-red-500' : (isFull ? 'bg-red-300' : 'bg-slate-200');
+
+    return (
+        <div className={`w-[165px] h-[400px] ${bgColorClass} rounded-lg flex flex-col gap-4 shadow-lg items-center relative`}>
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                                className={`p-1 rounded-lg transition-colors duration-200  gap-5 flex flex-col flex-grow h-full ${
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={`p-1 rounded-lg transition-colors duration-200 gap-5 flex flex-col flex-grow h-full ${
                             snapshot.isDraggingOver ? 'bg-slate-300 h-full' : ''
                         }`}
-                        >
-                            {passengers.map((p ,index) => {
-
-                                return (
-                                    <PassengerEntry
-                                    key={p.name}
-                                    memberName={p.name} 
-                                    hasCar={p.got_car === 'yes' ? true : false} 
-                                    suburb={p.suburb} 
-                                    index={index}
-                                    dropId={id}
-                                    deletePreviousState={deletePreviousState}
-                                />
-                                )
-                            })}
-                            {provided.placeholder}
-                        </div>
-                    )}
+                    >
+                        {passengers.map((p, index) => (
+                            <PassengerEntry
+                                key={p.name}
+                                memberName={p.name}
+                                hasCar={p.got_car === 'yes'}
+                                suburb={p.suburb}
+                                index={index}
+                                dropId={id}
+                                deletePreviousState={deletePreviousState}
+                            />
+                        ))}
+                        {provided.placeholder}
+                    </div>
+                )}
             </Droppable>
 
-            { passengers.length === 5 && <div className="text-red-500 absolute top-[-30px]">Car is full</div> }
-            { passengers.length > 5 && <div className="text-red-500 absolute top-[-50px] text-center">Capacity Exceeded!! Remove people</div> }
         </div>
-    )
-}
+    );
+};
 
 
 
