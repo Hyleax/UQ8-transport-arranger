@@ -142,7 +142,6 @@
             "Jolynn": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
             "Tang": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
             "Kee Ren": {"suburb": "Sunnybank", "got_car": "yes", "present": true},
-            "Michael": {"suburb": "Paddington", "got_car": "yes", "present": true},
             "Ainia": {"suburb": "Oxley", "got_car": "yes", "present": true},
             "Norman": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Adrinna": {"suburb": "Indooropilly", "got_car": "no", "present": true},
@@ -154,24 +153,28 @@
             "Kenny": {"suburb": "West End", "got_car": "no", "present": true},
             "Kevin": {"suburb": "Gatton", "got_car": "no", "present": true},
             "Samantha": {"suburb": "Toowong", "got_car": "no", "present": true},
-            "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Mabel": {"suburb": "Nathan", "got_car": "no", "present": true},
             "Leighton": {"suburb": "Logan", "got_car": "no", "present": true},
             "Matthew": {"suburb": "Herston", "got_car": "no", "present": true},
-            "Kathy": {"suburb": "Mt. Gravatt", "got_car": "yes", "present": true},
             "Brandon": {"suburb": "Toowong", "got_car": "no", "present": true},
             "Bonita": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-            "Jerone": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Iris": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Best": {"suburb": "Southbank", "got_car": "no", "present": true},
             "Tricia": {"suburb": "Spring Hill", "got_car": "no", "present": true},
             "Annie": {"suburb": "Sunnybank", "got_car": "no", "present": true},
             "Nick Law": {"suburb": "Richlands", "got_car": "yes", "present": true},
             "Ellen": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
-            "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true},
-            "Mark Ismail": {"suburb": "St. Lucia", "got_car": "no", "present": true}
-            
+            "Kien": {"suburb": "St. Lucia", "got_car": "no", "present": true}
         },
+
+        "legacy_members": {
+            "Michael": {"suburb": "Paddington", "got_car": "yes", "present": true},
+            "Ming": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Jerone": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Heidi": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "Kathy": {"suburb": "Mt. Gravatt", "got_car": "yes", "present": true}
+        },
+
         "rules": {
             "rule_1": "Ming and Tang live in the same house",
             "rule_2": "Kenny and Kevin live in the same house",
