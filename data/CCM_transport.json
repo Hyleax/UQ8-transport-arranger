@@ -162,7 +162,7 @@
             "Best": {"suburb": "Southbank", "got_car": "no", "present": true},
             "Tricia": {"suburb": "Spring Hill", "got_car": "no", "present": true},
             "Annie": {"suburb": "Sunnybank", "got_car": "no", "present": true},
-            "Nick Law": {"suburb": "Richlands", "got_car": "yes", "present": true},
+            "Nic Law": {"suburb": "Richlands", "got_car": "yes", "present": true},
             "Ellen": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Kien": {"suburb": "St. Lucia", "got_car": "no", "present": true}
         },
@@ -190,7 +190,6 @@
     "UQ6_transport_status": {
         "members": {
             "Alfred": {"suburb": "Milton", "got_car": "yes", "present": true},
-            "Amber": {"suburb": "Toowong", "got_car": "no", "present": true},
             "Ambrose": {"suburb": "Woolloongabba", "got_car": "no", "present": true},
             "Ben": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
             "Brandon": {"suburb": "Toowong", "got_car": "yes", "present": true},
@@ -209,6 +208,23 @@
             "Sophia": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Wei Yan": {"suburb": "St. Lucia", "got_car": "no", "present": true},
             "Wan Tong": {"suburb": "Toowong", "got_car": "no", "present": true}
+        },
+
+        "legacy_members": {
+            "Amber": {"suburb": "Toowong", "got_car": "no", "present": true}
+        }
+    },
+
+    "UQ3_transport_status": {
+        "members": {
+            "Way Shern": {"suburb": "St. Lucia", "got_car": "no", "present": true},
+            "Ben": {"suburb": "Southbank", "got_car": "no", "present": true},
+            "Joy": {"suburb": "Rochedale South", "got_car": "yes", "present": true},
+            "Grace": {"suburb": "St. Lucia", "got_car": "yes", "present": true},
+            "Riana": {"suburb": "Indooropilly", "got_car": "no", "present": true},
+            "Joseph": {"suburb": "Upper Mount Gravatt", "got_car": "yes", "present": true},
+            "Irene": {"suburb": "Toowong", "got_car": "no", "present": true},
+            "William": {"suburb": "Toowong", "got_car": "no", "present": true}
         }
     }
 }
