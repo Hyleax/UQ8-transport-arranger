@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import ccm_TD from '../../json_files/CCM_transport.json'; // import CCM transport data   
+import ccm_TD from '../../data/CCM_transport.json'; // import CCM transport data   
 
 // import LG car presets
 import { uq8_uni_to_home_preset } from "./Presets"
@@ -18,11 +18,11 @@ import { DragDropContext, Draggable, Droppable, DropResult, Placeholder } from "
 // This functional component renders a banner displaying the latest version and its new features.
 const VersionBanner = () => {
     return (
-        <div className="bg-yellow-300 w-full overflow-hidden xl:flex hidden justify-center p-1">
+        <div className="bg-pink-300 w-full overflow-hidden xl:flex hidden justify-center p-1">
             <div className="whitespace-nowrap animate-[marquee_10s_linear_infinite]">
-                <p className="inline-block">
-                    v3.1 out now 🤩 new features include: 
-                    <span className="font-extralight"> extensive drag and drop functionality, able to drag members from car to another, lifegroup presets</span>
+                <p className="flex gap-2">
+                    v3.2 out now 🤩 new features include: 
+                    <span className="font-extralight">Allow for absent members to be placed into a separate section for easier organisation</span>
                 </p>
             </div>
         </div>
@@ -47,11 +47,12 @@ export default function ManualInterface() {
     const uq8Members = Object.entries(ccm_TD.UQ8_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
     const uq6Members = Object.entries(ccm_TD.UQ6_transport_status.members).map(([name, info]) => ({ name, ...info })) as member[];
     const [allMembers, setAllMembers] = useState<member[]>(uq8Members);
-
+    
+    
     const [openModal, setOpenModal] = useState<boolean>(false); // state to open and close modal
     const [queryMember, setQueryMember] = useState<string>(""); 
-
-
+    
+    
     // state variables to represent each car column
     const [drivers, setDrivers] = useState<member[]>([]);
     const [nonDrivers, setNonDrivers] = useState<member[]>([]);
@@ -61,6 +62,7 @@ export default function ManualInterface() {
     const [car4, setCar4] = useState<member[]>([]);
     const [car5, setCar5] = useState<member[]>([]);
     const [car6, setCar6] = useState<member[]>([]);
+    const [absentMembers, setAbsentMembers] = useState<member[]>([])
 
 
 
@@ -113,7 +115,7 @@ export default function ManualInterface() {
     
         // Find the member that was dragged
         const member = findItemById(draggableId, [
-            ...car1, ...car2, ...car3, ...car4, ...car5, ...car6, ...drivers, ...nonDrivers
+            ...car1, ...car2, ...car3, ...car4, ...car5, ...car6, ...drivers, ...nonDrivers, ...absentMembers
         ]);
     
         // Insert the member into the new location
@@ -156,6 +158,10 @@ export default function ManualInterface() {
             case "nonDrivers":
                 updatedList = reorderList(nonDrivers, startIndex, endIndex);
                 setNonDrivers(updatedList);
+                break;
+            case "nonDrivers":
+                updatedList = reorderList(absentMembers, startIndex, endIndex);
+                setAbsentMembers(updatedList);
                 break;
         }
     };
@@ -207,6 +213,9 @@ export default function ManualInterface() {
             case "nonDrivers":
                 setNonDrivers(insertAt(nonDrivers, member, index));
                 break;
+            case "absent":
+                setAbsentMembers(insertAt(absentMembers, member, index));
+                break;
         }
     }
     
@@ -242,6 +251,9 @@ export default function ManualInterface() {
             case "nonDrivers":
                 setNonDrivers(removeItemById(memberIdName, nonDrivers));
                 break;
+            case "absent":
+                setAbsentMembers(removeItemById(memberIdName, absentMembers))
+                break;
         }
     }
     
@@ -249,7 +261,6 @@ export default function ManualInterface() {
     
     
     function deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean) {
-
 
         switch (sourceDroppableId) {
             case "1":
@@ -278,9 +289,27 @@ export default function ManualInterface() {
                 break;              
             case "drivers":
                 setDrivers(removeItemById(memberIdName, drivers));
+                setAbsentMembers(prev => ([...prev, 
+                    {
+                        name: memberIdName, 
+                        suburb: suburb,
+                        got_car: hasCar ? 'yes': 'no'
+                    } as member
+                ]))
                 break;
             case "nonDrivers":
                 setNonDrivers(removeItemById(memberIdName, nonDrivers));
+                setAbsentMembers(prev => ([...prev, 
+                    {
+                        name: memberIdName, 
+                        suburb: suburb,
+                        got_car: hasCar ? 'yes': 'no'
+                    } as member
+                ]))
+                break;
+            case "absent":
+                setAbsentMembers(removeItemById(memberIdName, absentMembers))
+                repopulateSelectionArea()
                 break;
         }
 
@@ -299,6 +328,23 @@ export default function ManualInterface() {
     const selectPreset = () => {
         setDropdownState(false)
 
+        /**
+             * resets all the fields in all car columns as well as everyone in the "absent members" row
+         */
+        function resetAllFields() {
+            setCar1([])
+            setCar2([])
+            setCar3([])
+            setCar4([])
+            setCar5([])
+            setCar6([])
+            setAbsentMembers([])
+        }
+
+        resetAllFields()
+
+        
+
         // set vehicle states for preset
         setCar1(uq8_uni_to_home_preset['car1'])
         setCar2(uq8_uni_to_home_preset['car2'])
@@ -312,6 +358,8 @@ export default function ManualInterface() {
         setDrivers(remainingMembers.filter(member => member.got_car === 'yes').sort((a, b) => a.suburb.localeCompare(b.suburb)))
         setNonDrivers(remainingMembers.filter(member => member.got_car === 'no').sort((a, b) => a.suburb.localeCompare(b.suburb)))
     }
+
+
    
 
     return (
@@ -365,13 +413,48 @@ export default function ManualInterface() {
 
                     <div className="flex-1 flex w-full justify-between">
                         {/* drop members here **LEFT SIDE** */}
-                        <div className="flex gap-4 items-center max-w-[70%] overflow-x-auto">
-                            <CarColumn passengers={car1} id={"1"} deletePreviousState={deletePreviousState}/>
-                            <CarColumn passengers={car2} id={"2"} deletePreviousState={deletePreviousState}/>
-                            <CarColumn passengers={car3} id={"3"} deletePreviousState={deletePreviousState}/>
-                            <CarColumn passengers={car4} id={"4"} deletePreviousState={deletePreviousState}/>
-                            <CarColumn passengers={car5} id={"5"} deletePreviousState={deletePreviousState}/>
-                            <CarColumn passengers={car6} id={"6"} deletePreviousState={deletePreviousState}/>
+                        <div className="flex flex-col gap-10 justify-center max-w-[70%]">
+                            <div className="flex gap-4  items-center  overflow-x-auto ">
+                                <CarColumn passengers={car1} id={"1"} deletePreviousState={deletePreviousState}/>
+                                <CarColumn passengers={car2} id={"2"} deletePreviousState={deletePreviousState}/>
+                                <CarColumn passengers={car3} id={"3"} deletePreviousState={deletePreviousState}/>
+                                <CarColumn passengers={car4} id={"4"} deletePreviousState={deletePreviousState}/>
+                                <CarColumn passengers={car5} id={"5"} deletePreviousState={deletePreviousState}/>
+                                <CarColumn passengers={car6} id={"6"} deletePreviousState={deletePreviousState}/>
+                            </div>
+                            
+                            <div className=" h-[180px] overflow-y-auto flex flex-col gap-2 bg-gray-300 rounded-lg shadow-lg">
+                                <p className="text-xl text-center p-1 underline ">Absent Members</p>
+                                
+                                <Droppable droppableId={"absent"} >
+                                    {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.droppableProps}
+                                                    className={`p-1 transition-colors duration-200  flex flex-grow flex-wrap gap-3 min-h-[100px]${
+                                                snapshot.isDraggingOver ? 'bg-blue-200' : ''
+                                            }`}
+                                            >
+                                                <div className="flex flex-wrap  gap-3">
+                                                    {absentMembers
+                                                    .filter(member => member.name.toLowerCase().includes(queryMember.toLowerCase()))
+                                                    .map((p, index) => (
+                                                        <PassengerEntry
+                                                            key={p.name}
+                                                            memberName={p.name} 
+                                                            hasCar={p.got_car === 'yes' ? true : false} 
+                                                            suburb={p.suburb} 
+                                                            index={index}
+                                                            dropId={'absent'}
+                                                            deletePreviousState={deletePreviousState}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                </Droppable>
+                            </div>
                         </div>
 
                         {/* add and select members here **RIGHT SIDE** */}
@@ -486,7 +569,7 @@ const CarColumn = ({ passengers, id, deletePreviousState  }: {
     deletePreviousState(sourceDroppableId: string, memberIdName: string, suburb: string, hasCar: boolean): void
 }) => {
     return(
-        <div className="w-[165px]  h-[770px] bg-slate-200 
+        <div className="w-[165px]  h-[400px] bg-slate-200 
           rounded-lg flex flex-col gap-4 shadow-lg items-center relative">
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
@@ -546,11 +629,13 @@ const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePrev
                     xl:p-3 p-1 cursor-pointer xl:w-[150px] w-[70px] h-[50px] text-center rounded-xl relative flex flex-wrap 
                     items-center xl:justify-center gap-1 shadow-lg 
                     ${
-                      dropId === 'drivers' || dropId === 'nonDrivers' 
-                        ? 'bg-emerald-400' 
-                        : index === 0 
-                          ? 'bg-blue-400' 
-                          : 'bg-yellow-200'
+                      dropId === 'absent' 
+                        ? 'bg-slate-400 hover:bg-slate-600' 
+                        : dropId === 'drivers' || dropId === 'nonDrivers' 
+                          ? 'bg-emerald-400' 
+                          : index === 0 
+                            ? 'bg-blue-400' 
+                            : 'bg-yellow-200'
                     }`}
                 
             >
@@ -570,10 +655,11 @@ const PassengerEntry = ({ memberName, hasCar, suburb , index, dropId, deletePrev
                 <p className="xl:text-xs text-[8px] font-bold text-left w-full">{ memberName } <span className="xl:text-xs text-[7px] italic font-extralight">({ suburb })</span></p>
             </div>
         )}
-    </Draggable>
+        </Draggable>
     )
 
 }
+
 
 
 
